@@ -1,4 +1,4 @@
-package com.lilioss.activityservicelifecycle;
+package com.lilioss.activitythread;
 
 import org.junit.Test;
 

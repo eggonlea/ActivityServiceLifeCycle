@@ -18,7 +18,7 @@ void run()
 }
 
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_lilioss_activityservicelifecycle_MainActivity_stringFromJNI(
+Java_com_lilioss_lifecycle_activitythread_MainActivity_stringFromJNI(
         JNIEnv* env,
         jobject /* this */) {
     std::string hello = "Hello from C++";
