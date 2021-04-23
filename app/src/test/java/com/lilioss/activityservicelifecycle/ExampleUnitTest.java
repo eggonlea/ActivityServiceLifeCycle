@@ -1,4 +1,4 @@
-package com.example.activityservicelifecycle;
+package com.lilioss.activityservicelifecycle;
 
 import org.junit.Test;
 

@@ -1,10 +1,10 @@
-package com.example.activityservicelifecycle;
+package com.lilioss.activityservicelifecycle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
-import com.example.activityservicelifecycle.databinding.ActivityMainBinding;
+import com.lilioss.activityservicelifecycle.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 

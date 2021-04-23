@@ -1,4 +1,4 @@
-package com.example.activityservicelifecycle;
+package com.lilioss.activityservicelifecycle;
 
 import android.os.AsyncTask;
 import android.os.SystemClock;
