@@ -1,2 +1,4 @@
 rootProject.name = "ActivityServiceLifeCycle"
-include ':activitythread'
+include ':simpleactivity'
+include ':installpackages'
+include ':threadlibrary'
