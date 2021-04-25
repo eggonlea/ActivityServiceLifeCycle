@@ -9,7 +9,7 @@ import com.lilioss.lifecycle.library.NativeThread;
 
 public class InstallPackagesActivity extends AppCompatActivity {
 
-  private final static String TAG = "InsPkgActivity";
+  private final static String TAG = "LifeCycle: InsPkgActivity";
   private final JavaThread javaThread = new JavaThread(TAG);
   private final NativeThread nativeThread = new NativeThread(TAG);
 

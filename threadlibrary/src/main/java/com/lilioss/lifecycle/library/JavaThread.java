@@ -9,7 +9,7 @@ public class JavaThread extends Thread {
   boolean finished = false;
 
   public JavaThread(String s) {
-    tag = "Java Thread_" + s;
+    tag = "LifeCycle: Java Thread_" + s;
   }
 
   @Override

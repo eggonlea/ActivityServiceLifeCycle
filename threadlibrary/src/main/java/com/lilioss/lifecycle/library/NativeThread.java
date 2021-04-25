@@ -9,7 +9,7 @@ public class NativeThread {
   private final String tag;
 
   public NativeThread(String s) {
-    tag = "std::thread_" + s;
+    tag = "LifeCycle: std::thread_" + s;
   }
 
   public void start() {
