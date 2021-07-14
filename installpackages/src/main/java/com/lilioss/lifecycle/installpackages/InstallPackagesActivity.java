@@ -1,5 +1,9 @@
 package com.lilioss.lifecycle.installpackages;
 
+import android.app.IntentService;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,7 +13,13 @@ import com.lilioss.lifecycle.library.NativeThread;
 
 public class InstallPackagesActivity extends AppCompatActivity {
 
-  private final static String TAG = "LifeCycle: InsPkgActivity";
+  private final static String TAG = "LifeCycle: InsPkg";
+  private static final String PKG_NAME = "com.lilioss.lifecycle.simpleactivity";
+  private static final String SVC_NAME = "com.lilioss.lifecycle.simpleactivity.SimpleIntentService";
+  private static final String ACTION_BAZ = "com.lilioss.lifecycle.simpleactivity.action.BAZ";
+  private static final String EXTRA_PARAM1 = "com.lilioss.lifecycle.simpleactivity.extra.PARAM1";
+  private static final String EXTRA_PARAM2 = "com.lilioss.lifecycle.simpleactivity.extra.PARAM2";
+
   private final JavaThread javaThread = new JavaThread(TAG);
   private final NativeThread nativeThread = new NativeThread(TAG);
 
@@ -53,6 +63,10 @@ public class InstallPackagesActivity extends AppCompatActivity {
   protected final void onResume() {
     Log.i(TAG, "onResume");
     super.onResume();
+
+    startActionBaz(getApplicationContext(),
+        "param1",
+        "param2");
   }
 
   @Override
@@ -73,5 +87,22 @@ public class InstallPackagesActivity extends AppCompatActivity {
     super.onDestroy();
     javaThread.finish();
     nativeThread.finish();
+  }
+
+  /**
+   * Starts this service to perform action Baz with the given parameters. If the service is already
+   * performing a task this action will be queued.
+   *
+   * @see IntentService
+   */
+  // TODO: Customize helper method
+  public static void startActionBaz(Context context, String param1, String param2) {
+    Log.i(TAG, "startActionBaz");
+    Intent intent = new Intent();
+    intent.setComponent(new ComponentName(PKG_NAME, SVC_NAME));
+    intent.setAction(ACTION_BAZ);
+    intent.putExtra(EXTRA_PARAM1, param1);
+    intent.putExtra(EXTRA_PARAM2, param2);
+    context.startForegroundService(intent);
   }
 }

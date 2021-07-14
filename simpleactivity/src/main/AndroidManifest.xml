@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lilioss.lifecycle.simpleactivity">
 
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+
   <application
       android:allowBackup="true"
       android:icon="@mipmap/ic_launcher"
@@ -9,13 +11,27 @@
       android:roundIcon="@mipmap/ic_launcher_round"
       android:supportsRtl="true"
       android:theme="@style/Theme.ActivityServiceLifeCycle">
-    <activity android:name="com.lilioss.lifecycle.simpleactivity.SimpleActivity">
+    <activity android:name=".SimpleActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
 
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
+
+    <service
+        android:name=".SimpleIntentService"
+        android:enabled="true"
+        android:exported="true">
+      <intent-filter>
+        <action android:name="com.lilioss.lifecycle.simpleactivity.action.BAZ"></action>
+      </intent-filter>
+    </service>
+
+    <service
+        android:name=".SimpleService"
+        android:enabled="true"
+        android:exported="true" />
   </application>
 
 </manifest>

@@ -5,6 +5,9 @@
 
   <uses-permission android:name="android.permission.INSTALL_PACKAGES"
       tools:ignore="ProtectedPermissions" />
+  <queries>
+    <package android:name="com.lilioss.lifecycle.simpleactivity" />
+  </queries>
 
   <application
       android:allowBackup="true"

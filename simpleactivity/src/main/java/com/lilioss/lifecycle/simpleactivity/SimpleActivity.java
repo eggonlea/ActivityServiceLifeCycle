@@ -8,7 +8,7 @@ import com.lilioss.lifecycle.library.NativeThread;
 
 public class SimpleActivity extends AppCompatActivity {
 
-  private final static String TAG = "LifeCycle: SimpleActivity";
+  private final static String TAG = "LifeCycle: Activity";
   private final JavaThread javaThread = new JavaThread(TAG);
   private final NativeThread nativeThread = new NativeThread(TAG);
 
@@ -31,6 +31,10 @@ public class SimpleActivity extends AppCompatActivity {
   protected final void onResume() {
     Log.i(TAG, "onResume");
     super.onResume();
+
+    SimpleIntentService.startActionFoo(getApplicationContext(),
+        "param1",
+        "param2");
   }
 
   @Override
