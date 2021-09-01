@@ -1,12 +1,12 @@
 package com.lilioss.lifecycle.simpleactivity;
 
+import android.os.Bundle;
 import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
 import com.lilioss.lifecycle.library.JavaThread;
 import com.lilioss.lifecycle.library.NativeThread;
 
-public class SimpleActivity extends AppCompatActivity {
+public class CgroupFlockActivity extends AppCompatActivity {
 
   private final static String TAG = "LifeCycle: Activity";
   private final JavaThread javaThread = new JavaThread(TAG);

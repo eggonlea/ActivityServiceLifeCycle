@@ -13,7 +13,11 @@ public class NativeThread {
   }
 
   public void start() {
-    nativeStart(tag);
+    nativeStart(tag, false, false);
+  }
+
+  public void start(boolean cgroup, boolean flock) {
+    nativeStart(tag, cgroup, flock);
   }
 
   public void finish() {
@@ -24,6 +28,6 @@ public class NativeThread {
    * A native method that is implemented by the 'native-lib' native library, which is packaged with
    * this application.
    */
-  private native void nativeStart(String s);
+  private native void nativeStart(String s, boolean cgroup, boolean flock);
   private native void nativeFinish();
 }

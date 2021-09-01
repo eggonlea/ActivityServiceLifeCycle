@@ -8,9 +8,6 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#define TEST_CGROUP false
-#define TEST_FLOCK  false
-
 bool finished = false;
 char tag[64];
 
@@ -79,8 +76,8 @@ void test_flock()
   //close(fd);
 }
 
-void run() {
-  if (TEST_CGROUP) {
+void run(bool cgroup, bool flock) {
+  if (cgroup) {
     test_cgroup();
     int pid = fork();
     __android_log_print(ANDROID_LOG_INFO, tag, "fork %d", pid);
@@ -91,7 +88,7 @@ void run() {
     }
   }
 
-  if (TEST_FLOCK) test_flock();
+  if (flock) test_flock();
 
   int count = 0;
   while (!finished) {
@@ -104,13 +101,15 @@ extern "C" JNIEXPORT void JNICALL
 Java_com_lilioss_lifecycle_library_NativeThread_nativeStart(
         JNIEnv* env,
         jobject /* this */,
-        jstring s) {
+        jstring s,
+        jboolean cgroup,
+        jboolean flock) {
     int n = env->GetStringLength(s);
     const char *str = env->GetStringUTFChars(s, 0);
     strncpy(tag, str, 64);
     tag[63] = '\0';
     env->ReleaseStringUTFChars(s, str);
-    std::thread t(run);
+    std::thread t(run, cgroup, flock);
     t.detach();
 }
 
