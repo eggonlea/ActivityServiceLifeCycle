@@ -1,15 +1,30 @@
 package com.lilioss.lifecycle.library;
 
+import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.SystemClock;
 import android.util.Log;
+import java.util.List;
 
 public class JavaThread extends Thread {
 
   private final String tag;
-  boolean finished = false;
+  private Context context = null;
+  private boolean finished = false;
+  private boolean workload = false;
 
   public JavaThread(String s) {
     tag = "LifeCycle: Java Thread_" + s;
+  }
+
+  public void setContext(Context cntx) {
+    context = cntx;
+  }
+
+  public void enableWorkload() {
+    workload = true;
   }
 
   @Override
@@ -18,6 +33,12 @@ public class JavaThread extends Thread {
     int i = 0;
     while (!finished) {
       Log.i(tag, "" + i++);
+      if (context != null && workload) {
+        PackageManager pm = context.getPackageManager();
+        List<ApplicationInfo> listAppInfo = pm.getInstalledApplications(0);
+        List<PackageInfo> listPkgInfo = pm.getInstalledPackages(0);
+        Log.i(tag, "Apps=" + listAppInfo.size() + " Pkgs=" + listPkgInfo.size());
+      }
       SystemClock.sleep(1000);
     }
   }
