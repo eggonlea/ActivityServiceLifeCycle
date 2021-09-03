@@ -1,7 +1,8 @@
 #!/bin/bash
 
+adbroot.sh
 adb logcat -c
-adb shell device_config put activity_manager_native_boot freeze_debounce_timeout
+adb shell device_config put activity_manager_native_boot freeze_debounce_timeout 1000
 
 II=0
 
@@ -11,12 +12,21 @@ do
   #adb shell am start -n com.lilioss.lifecycle.simpleactivity/.SimpleActivity
   adb shell am start -n com.lilioss.lifecycle.simpleactivity/.BackgroundActivity
   sleep 1
+  adb shell am start -n com.android.settings/.homepage.SettingsHomepageActivity
+  sleep 1
   adb shell am start -n com.google.android.deskclock/com.android.deskclock.DeskClock
   sleep 1
   adb shell am start -n com.google.android.calculator/com.android.calculator2.Calculator
-  sleep 2
+  sleep 1
+  adb shell input keyevent KEYCODE_HOME
+  sleep 1
 
-  adb logcat -d | grep -E "FAILED BINDER TRANSACTION|DeadObjectException"
+  PID1=`pid.sh lilioss`
+  PID2=`pid.sh clock`
+  PID3=`pid.sh com.android.settings`
+  echo "pid $PID1 $PID2 $PID3"
+  #adb logcat -d | grep -E "FAILED BINDER TRANSACTION|DeadObjectException|freeze binder"
+  adb logcat -d | grep -E "FAILED BINDER TRANSACTION|DeadObjectException|freeze binder" | grep -E "$PID1|$PID2|$PID3"
   if [ $? -eq 0 ];
   then
     echo "ERROR FOUND"
