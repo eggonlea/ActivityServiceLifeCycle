@@ -9,16 +9,20 @@ import com.lilioss.lifecycle.library.NativeThread;
 public class BackgroundActivity extends AppCompatActivity {
 
   private final static String TAG = "LifeCycle: Activity";
-  private final JavaThread javaThread = new JavaThread(TAG);
+  private final int N = 5;
+  private final JavaThread[] javaThread = new JavaThread[N];
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     Log.i(TAG, "onCreate");
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    javaThread.setContext(getApplicationContext());
-    javaThread.enableWorkload();
-    javaThread.start();
+    for (int i=0; i<N; i++) {
+      javaThread[i] = new JavaThread(TAG + "#" + i);
+      javaThread[i].setContext(getApplicationContext());
+      javaThread[i].enableWorkload();
+      javaThread[i].start();
+    }
   }
 
   @Override
@@ -53,6 +57,8 @@ public class BackgroundActivity extends AppCompatActivity {
   protected void onDestroy() {
     Log.i(TAG, "onDestroy");
     super.onDestroy();
-    javaThread.finish();
+    for (int i=0; i<N; i++) {
+      javaThread[i].finish();
+    }
   }
 }

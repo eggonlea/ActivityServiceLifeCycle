@@ -76,6 +76,28 @@ void test_flock()
   //close(fd);
 }
 
+void testOverload(bool *b) {
+  *b = true;
+  __android_log_print(ANDROID_LOG_INFO, tag, "%s %u", "Calling bool function: ", *b);
+}
+
+void testOverload(uint32_t *u) {
+  *u = 0x11;
+  __android_log_print(ANDROID_LOG_INFO, tag, "%s %u", "Calling u32 function: ", *u);
+}
+
+void testOverload() {
+  bool b = false;
+  uint32_t u = 0;
+  testOverload(&b);
+  testOverload(&u);
+  __android_log_print(ANDROID_LOG_INFO, tag, "b=%u u=%u", b, u);
+
+  testOverload((uint32_t *)(&b));
+  testOverload((bool *)(&u));
+  __android_log_print(ANDROID_LOG_INFO, tag, "b=%u u=%u", b, u);
+}
+
 void run(bool cgroup, bool flock) {
   if (cgroup) {
     test_cgroup();
@@ -89,6 +111,8 @@ void run(bool cgroup, bool flock) {
   }
 
   if (flock) test_flock();
+
+  testOverload();
 
   int count = 0;
   while (!finished) {

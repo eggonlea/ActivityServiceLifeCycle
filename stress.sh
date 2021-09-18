@@ -2,11 +2,11 @@
 
 adbroot.sh
 adb logcat -c
-adb shell device_config put activity_manager_native_boot freeze_debounce_timeout 1000
+#adb shell device_config put activity_manager_native_boot freeze_debounce_timeout 1000
 
 II=0
 
-while [ $II -lt 1000 ];
+while [ $II -lt 5000 ];
 do
   echo "Iteration $II"
   #adb shell am start -n com.lilioss.lifecycle.simpleactivity/.SimpleActivity
@@ -22,7 +22,7 @@ do
   sleep 1
 
   PID1=`pid.sh lilioss`
-  PID2=`pid.sh clock`
+  PID2=`pid.sh deskclock`
   PID3=`pid.sh com.android.settings`
   echo "pid $PID1 $PID2 $PID3"
   #adb logcat -d | grep -E "FAILED BINDER TRANSACTION|DeadObjectException|freeze binder"
