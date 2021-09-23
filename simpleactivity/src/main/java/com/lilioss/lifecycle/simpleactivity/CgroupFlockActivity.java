@@ -16,7 +16,7 @@ public class CgroupFlockActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     Log.i(TAG, "onCreate");
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+    setContentView(R.layout.activity_cgroupflock);
     javaThread.start();
     nativeThread.start(true, true);
   }

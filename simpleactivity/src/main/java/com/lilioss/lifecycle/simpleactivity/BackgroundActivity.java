@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import com.lilioss.lifecycle.library.JavaThread;
-import com.lilioss.lifecycle.library.NativeThread;
 
 public class BackgroundActivity extends AppCompatActivity {
 
@@ -16,7 +15,7 @@ public class BackgroundActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     Log.i(TAG, "onCreate");
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+    setContentView(R.layout.activity_background);
     for (int i=0; i<N; i++) {
       javaThread[i] = new JavaThread(TAG + "#" + i);
       javaThread[i].setContext(getApplicationContext());

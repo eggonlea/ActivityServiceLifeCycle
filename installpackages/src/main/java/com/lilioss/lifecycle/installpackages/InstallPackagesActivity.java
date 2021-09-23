@@ -50,7 +50,7 @@ public class InstallPackagesActivity extends AppCompatActivity {
     }
 
     javaThread.start();
-    nativeThread.start();
+    nativeThread.start(false, true);
   }
 
   @Override

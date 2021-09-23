@@ -32,6 +32,7 @@ public class JavaThread extends Thread {
     super.run();
     int i = 0;
     while (!finished) {
+      SystemClock.sleep(1000);
       Log.i(tag, "" + i++);
       if (context != null && workload) {
         PackageManager pm = context.getPackageManager();
@@ -39,7 +40,6 @@ public class JavaThread extends Thread {
         List<PackageInfo> listPkgInfo = pm.getInstalledPackages(0);
         Log.i(tag, "Apps=" + listAppInfo.size() + " Pkgs=" + listPkgInfo.size());
       }
-      SystemClock.sleep(1000);
     }
   }
 

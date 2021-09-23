@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.lilioss.lifecycle.installpackages">
 
+  <uses-permission android:name="android.Manifest.permission.READ_EXTERNAL_STORAGE"/>
+  <uses-permission android:name="android.Manifest.permission.WRITE_EXTERNAL_STORAGE"/>
   <uses-permission android:name="android.permission.INSTALL_PACKAGES"
       tools:ignore="ProtectedPermissions" />
   <queries>
@@ -15,6 +17,7 @@
       android:label="@string/app_name"
       android:roundIcon="@mipmap/ic_launcher_round"
       android:supportsRtl="true"
+      android:requestLegacyExternalStorage="true"
       android:theme="@style/Theme.ActivityServiceLifeCycle">
     <activity android:name=".InstallPackagesActivity">
       <intent-filter>

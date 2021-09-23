@@ -16,7 +16,7 @@ public class SimpleActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     Log.i(TAG, "onCreate");
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+    setContentView(R.layout.activity_simple);
     javaThread.start();
     nativeThread.start(true, true);
   }

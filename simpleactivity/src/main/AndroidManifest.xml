@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.lilioss.lifecycle.simpleactivity">
 
+  <uses-permission android:name="android.Manifest.permission.READ_EXTERNAL_STORAGE"/>
+  <uses-permission android:name="android.Manifest.permission.WRITE_EXTERNAL_STORAGE"/>
   <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
   <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
       tools:ignore="QueryAllPackagesPermission" />
@@ -13,6 +15,7 @@
       android:label="@string/app_name"
       android:roundIcon="@mipmap/ic_launcher_round"
       android:supportsRtl="true"
+      android:requestLegacyExternalStorage="true"
       android:theme="@style/Theme.ActivityServiceLifeCycle">
     <activity android:name=".SimpleActivity">
       <intent-filter>
