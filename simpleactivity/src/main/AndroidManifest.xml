@@ -42,14 +42,18 @@
         android:enabled="true"
         android:exported="true">
       <intent-filter>
-        <action android:name="com.lilioss.lifecycle.simpleactivity.action.BAZ"></action>
+        <action android:name="com.lilioss.lifecycle.simpleactivity.action.BAZ"/>
       </intent-filter>
     </service>
 
     <service
-        android:name=".SimpleService"
+        android:name=".SimpleAIDLService"
         android:enabled="true"
-        android:exported="true" />
+        android:exported="true">
+      <intent-filter>
+        <action android:name="com.lilioss.lifecycle.simpleactivity.action.aidl"/>
+      </intent-filter>
+    </service>
   </application>
 
 </manifest>

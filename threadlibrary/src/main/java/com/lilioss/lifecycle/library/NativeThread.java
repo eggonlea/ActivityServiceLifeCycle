@@ -15,15 +15,21 @@ public class NativeThread {
 
   public NativeThread(String s) {
     tag = "LifeCycle: std::thread_" + s;
-    nativeSetEnv(Environment.getExternalStoragePublicDirectory(DIRECTORY_DOWNLOADS).getAbsolutePath());
+    nativeSetTag(tag);
+  }
+
+  public int getFD() {
+    return nativeGetFD(Environment
+        .getExternalStoragePublicDirectory(DIRECTORY_DOWNLOADS)
+        .getAbsolutePath());
+  }
+
+  public void setFD(int fd) {
+    nativeSetFD(fd);
   }
 
   public void start() {
-    nativeStart(tag, false, false);
-  }
-
-  public void start(boolean cgroup, boolean flock) {
-    nativeStart(tag, cgroup, flock);
+    nativeStart();
   }
 
   public void finish() {
@@ -31,10 +37,29 @@ public class NativeThread {
   }
 
   /**
+   * Misc tools
+   */
+  public void testCgroup() {
+    nativeTestCgroup();
+  }
+
+  public void testOverload() {
+    nativeTestOverload();
+  }
+
+  /**
    * A native method that is implemented by the 'native-lib' native library, which is packaged with
    * this application.
    */
-  private native void nativeSetEnv(String s);
-  private native void nativeStart(String s, boolean cgroup, boolean flock);
+  private native void nativeSetTag(String tag);
+  private native int nativeGetFD(String path);
+  private native void nativeSetFD(int fd);
+  private native void nativeStart();
   private native void nativeFinish();
+
+  /**
+   * Misc tools
+   */
+  private native void nativeTestCgroup();
+  private native void nativeTestOverload();
 }

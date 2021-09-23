@@ -4,10 +4,14 @@ import android.app.IntentService;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
+import android.os.IBinder;
+import android.os.RemoteException;
 import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import com.lilioss.lifecycle.library.ISimpleAidlInterface;
 import com.lilioss.lifecycle.library.JavaThread;
 import com.lilioss.lifecycle.library.NativeThread;
 
@@ -15,13 +19,17 @@ public class InstallPackagesActivity extends AppCompatActivity {
 
   private final static String TAG = "LifeCycle: InsPkg";
   private static final String PKG_NAME = "com.lilioss.lifecycle.simpleactivity";
-  private static final String SVC_NAME = "com.lilioss.lifecycle.simpleactivity.SimpleIntentService";
+  private static final String INTENT_SVC = "com.lilioss.lifecycle.simpleactivity.SimpleIntentService";
+  private static final String AIDL_SVC = "com.lilioss.lifecycle.simpleactivity.SimpleAIDLService";
   private static final String ACTION_BAZ = "com.lilioss.lifecycle.simpleactivity.action.BAZ";
+  private static final String ACTION_AIDL = "com.lilioss.lifecycle.simpleactivity.action.AIDL";
   private static final String EXTRA_PARAM1 = "com.lilioss.lifecycle.simpleactivity.extra.PARAM1";
   private static final String EXTRA_PARAM2 = "com.lilioss.lifecycle.simpleactivity.extra.PARAM2";
 
   private final JavaThread javaThread = new JavaThread(TAG);
   private final NativeThread nativeThread = new NativeThread(TAG);
+
+  private ISimpleAidlInterface mSimpleManager = null;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +58,7 @@ public class InstallPackagesActivity extends AppCompatActivity {
     }
 
     javaThread.start();
-    nativeThread.start(false, true);
+    nativeThread.start();
   }
 
   @Override
@@ -67,6 +75,8 @@ public class InstallPackagesActivity extends AppCompatActivity {
     startActionBaz(getApplicationContext(),
         "param1",
         "param2");
+
+    bindAIDLService();
   }
 
   @Override
@@ -95,14 +105,46 @@ public class InstallPackagesActivity extends AppCompatActivity {
    *
    * @see IntentService
    */
-  // TODO: Customize helper method
-  public static void startActionBaz(Context context, String param1, String param2) {
+  public void startActionBaz(Context context, String param1, String param2) {
     Log.i(TAG, "startActionBaz");
     Intent intent = new Intent();
-    intent.setComponent(new ComponentName(PKG_NAME, SVC_NAME));
+    intent.setComponent(new ComponentName(PKG_NAME, INTENT_SVC));
     intent.setAction(ACTION_BAZ);
     intent.putExtra(EXTRA_PARAM1, param1);
     intent.putExtra(EXTRA_PARAM2, param2);
     context.startForegroundService(intent);
   }
+
+  public void bindAIDLService() {
+    Log.i(TAG, "bindAIDLService");
+    Intent intent = new Intent();
+    intent.setComponent(new ComponentName(PKG_NAME, AIDL_SVC));
+    intent.setAction(ACTION_AIDL);
+    bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);
+  }
+
+  private final ServiceConnection mServiceConnection = new ServiceConnection() {
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder service) {
+      Log.i(TAG, "onServiceConnected");
+      mSimpleManager = ISimpleAidlInterface.Stub.asInterface(service);
+      if (mSimpleManager != null) {
+        try {
+          Log.i(TAG, mSimpleManager.basicTypes(1,
+              2,
+              true,
+              3,
+              4,
+              "abc"));
+        } catch (RemoteException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+
+    @Override
+    public void onServiceDisconnected(ComponentName name) {
+      Log.i(TAG, "onServiceDisconnected");
+    }
+  };
 }

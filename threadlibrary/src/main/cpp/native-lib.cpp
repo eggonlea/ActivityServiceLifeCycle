@@ -12,10 +12,10 @@
 #define FOOTPRINT __android_log_print(ANDROID_LOG_INFO, tag, "--- ===== %s() ===== ---", __func__)
 
 bool finished = false;
-char tag[64];
-char cache[1024];
+char tag[64] = "NativeThread";
+int fd = -1;
 
-void test_cgroup()
+void testCgroup()
 {
   FOOTPRINT;
   int uid=0, pid=0;
@@ -82,77 +82,106 @@ void testOverload() {
   __android_log_print(ANDROID_LOG_INFO, tag, "b=%u u=%u", b, u);
 }
 
-void run(bool cgroup, bool filelock) {
-  testOverload();
+void testFileLock() {
+  FOOTPRINT;
+  int pid = fork();
+  __android_log_print(ANDROID_LOG_INFO, tag, "fork %d", pid);
+  struct flock lock;
+  lock.l_type = F_WRLCK;
+  lock.l_start = 0;
+  lock.l_whence = SEEK_SET;
+  lock.l_len = 0;
+  __android_log_print(ANDROID_LOG_INFO, tag, "locking %d", fd);
+  int ret = fcntl(fd, F_SETLKW, &lock);
+  __android_log_print(ANDROID_LOG_INFO, tag, "locked %d return %d", fd, ret);
+}
 
-  if (cgroup) {
-    test_cgroup();
-    int pid = fork();
-    __android_log_print(ANDROID_LOG_INFO, tag, "fork %d", pid);
-
-    if (pid == 0) {
-      test_cgroup();
-      return;
-    } else {
-      int ret;
-      waitpid(pid, &ret, 0);
-    }
-  }
-
-  int fd = -1;
-  if (filelock) {
-    // The blocked locks should be visible in /proc/locks
-    char fname[1024];
-    snprintf(fname, 1024, "%s/%s", cache, "native_lock");
-    fd = open(fname, O_CREAT | O_RDWR, S_IRWXU | S_IRWXG | S_IRWXO);
-    __android_log_print(ANDROID_LOG_INFO, tag, "open %d (%s) %d %s", fd, fname, errno, strerror(errno));
-    fork();
-    struct flock lock;
-    lock.l_type = F_WRLCK;
-    lock.l_start = 0;
-    lock.l_whence = SEEK_SET;
-    lock.l_len = 0;
-    __android_log_print(ANDROID_LOG_INFO, tag, "locking %d", fd);
-    int ret = fcntl(fd, F_SETLKW, &lock);
-    __android_log_print(ANDROID_LOG_INFO, tag, "locked %d return %d", fd, ret);
-  }
-
+void runLoop() {
+  FOOTPRINT;
   int count = 0;
   while (!finished) {
     sleep(1);
     __android_log_print(ANDROID_LOG_INFO, tag, "%d", count++);
   }
+}
+void run() {
+  __android_log_print(ANDROID_LOG_INFO, tag, "NativeThread start");
 
-  if (filelock) {
+  if (fd >= 0) testFileLock();
+
+  runLoop();
+
+  if (fd >= 0) {
     __android_log_print(ANDROID_LOG_INFO, tag, "release lock %d", fd);
     close(fd); // intentionally leave it open
   }
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_com_lilioss_lifecycle_library_NativeThread_nativeSetEnv(
+Java_com_lilioss_lifecycle_library_NativeThread_nativeTestCgroup(
     JNIEnv* env,
-    jobject /* this */,
-    jstring s) {
-  const char *str = env->GetStringUTFChars(s, 0);
-  strncpy(cache, str, 1024);
-  cache[1023] = '\0';
-  __android_log_print(ANDROID_LOG_INFO, tag, "cache path: [%s]", cache);
+    jobject /* this */) {
+  testCgroup();
+  int pid = fork();
+  __android_log_print(ANDROID_LOG_INFO, tag, "fork %d", pid);
+
+  if (pid == 0) {
+    testCgroup();
+
+    // clean up VM code
+    execl("/system/bin/true", "/system/bin/true");
+  } else {
+    int ret;
+    waitpid(pid, &ret, 0);
+  }
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_com_lilioss_lifecycle_library_NativeThread_nativeStart(
+Java_com_lilioss_lifecycle_library_NativeThread_nativeTestOverload(
+    JNIEnv* env,
+    jobject /* this */) {
+  testOverload();
+}
+
+extern "C" JNIEXPORT int JNICALL
+Java_com_lilioss_lifecycle_library_NativeThread_nativeGetFD(
     JNIEnv* env,
     jobject /* this */,
-    jstring s,
-    jboolean cgroup,
-    jboolean flock) {
+    jstring path) {
+  const char *str = env->GetStringUTFChars(path, 0);
+  char fname[1024];
+  snprintf(fname, 1024, "%s/%s", str, "file_lock");
+  fd = open(fname, O_CREAT | O_RDWR, S_IRWXU | S_IRWXG | S_IRWXO);
+  __android_log_print(ANDROID_LOG_INFO, tag, "open %d (%s) %d %s", fd, fname, errno, strerror(errno));
+  return fd;
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_com_lilioss_lifecycle_library_NativeThread_nativeSetFD(
+    JNIEnv* env,
+    jobject /* this */,
+    jint n) {
+  fd = n;
+  __android_log_print(ANDROID_LOG_INFO, tag, "SetFD(%d)", fd);
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_com_lilioss_lifecycle_library_NativeThread_nativeSetTag(
+    JNIEnv* env,
+    jobject /* this */,
+    jstring s) {
   int n = env->GetStringLength(s);
   const char *str = env->GetStringUTFChars(s, 0);
   strncpy(tag, str, 64);
   tag[63] = '\0';
   env->ReleaseStringUTFChars(s, str);
-  std::thread t(run, cgroup, flock);
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_com_lilioss_lifecycle_library_NativeThread_nativeStart(
+    JNIEnv* env,
+    jobject /* this */) {
+  std::thread t(run);
   t.detach();
 }
 

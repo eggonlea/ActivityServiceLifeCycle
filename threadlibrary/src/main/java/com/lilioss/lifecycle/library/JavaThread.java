@@ -29,6 +29,7 @@ public class JavaThread extends Thread {
 
   @Override
   public void run() {
+    Log.i(tag, "JavaThread start");
     super.run();
     int i = 0;
     while (!finished) {

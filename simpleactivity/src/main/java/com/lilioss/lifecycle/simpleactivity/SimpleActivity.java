@@ -8,7 +8,7 @@ import com.lilioss.lifecycle.library.NativeThread;
 
 public class SimpleActivity extends AppCompatActivity {
 
-  private final static String TAG = "LifeCycle: Activity";
+  private final static String TAG = "LifeCycle: SimpleActivity";
   private final JavaThread javaThread = new JavaThread(TAG);
   private final NativeThread nativeThread = new NativeThread(TAG);
 
@@ -18,7 +18,7 @@ public class SimpleActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_simple);
     javaThread.start();
-    nativeThread.start(true, true);
+    nativeThread.start();
   }
 
   @Override

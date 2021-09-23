@@ -8,7 +8,7 @@ import com.lilioss.lifecycle.library.NativeThread;
 
 public class CgroupFlockActivity extends AppCompatActivity {
 
-  private final static String TAG = "LifeCycle: Activity";
+  private final static String TAG = "LifeCycle: CFActivity";
   private final JavaThread javaThread = new JavaThread(TAG);
   private final NativeThread nativeThread = new NativeThread(TAG);
 
@@ -18,7 +18,10 @@ public class CgroupFlockActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_cgroupflock);
     javaThread.start();
-    nativeThread.start(true, true);
+    nativeThread.testOverload();
+    nativeThread.testCgroup();
+    nativeThread.getFD();
+    nativeThread.start();
   }
 
   @Override

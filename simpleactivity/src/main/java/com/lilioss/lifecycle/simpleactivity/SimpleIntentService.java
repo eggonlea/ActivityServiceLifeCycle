@@ -7,8 +7,10 @@ import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.Context;
 import android.os.IBinder;
+import android.os.RemoteException;
 import android.util.Log;
 import androidx.annotation.Nullable;
+import com.lilioss.lifecycle.library.ISimpleAidlInterface;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in a service on a

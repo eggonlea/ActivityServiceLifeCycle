@@ -7,7 +7,7 @@ import com.lilioss.lifecycle.library.JavaThread;
 
 public class BackgroundActivity extends AppCompatActivity {
 
-  private final static String TAG = "LifeCycle: Activity";
+  private final static String TAG = "LifeCycle: BGActivity";
   private final int N = 5;
   private final JavaThread[] javaThread = new JavaThread[N];
 
