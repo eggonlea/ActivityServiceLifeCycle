@@ -14,6 +14,7 @@ public class SimpleAIDLService extends Service {
   private final static String TAG = "LifeCycle: AidlSvc";
 
   private final NativeThread nativeThread = new NativeThread(TAG);
+  private int mFd = -1;
 
   public SimpleAIDLService() {
   }
@@ -55,21 +56,34 @@ public class SimpleAIDLService extends Service {
     }
 
     @Override
-    public ParcelFileDescriptor shareFile() throws RemoteException {
-      int fd = nativeThread.getFD();
-      if (fd == -1) {
-        fd = nativeThread.openFD();
-        nativeThread.start();
-        nativeThread.fork();
+    public ParcelFileDescriptor shareFileLock() throws RemoteException {
+      mFd = nativeThread.getFD();
+      if (mFd == -1) {
+        nativeThread.openFD();
+        mFd = nativeThread.getFD();
       }
-      Log.i(TAG, "shareFile: " + fd);
 
-      if (fd == -1) {
+      if (mFd == -1) {
+        Log.e(TAG, "Failed to open lock file");
         return null;
       }
 
+      int fd = nativeThread.getFD();
+      Log.i(TAG, "shareFile: " + fd);
+      ParcelFileDescriptor pfd = ParcelFileDescriptor.adoptFd(fd);
+      nativeThread.start();
+      return pfd;
+    }
+
+    @Override
+    public void cleanFileLock() throws RemoteException {
+      nativeThread.finish();
+    }
+
+    @Override
+    public void fork() throws RemoteException {
+      nativeThread.setFD(mFd);
       nativeThread.fork();
-      return ParcelFileDescriptor.adoptFd(fd);
     }
   };
 }

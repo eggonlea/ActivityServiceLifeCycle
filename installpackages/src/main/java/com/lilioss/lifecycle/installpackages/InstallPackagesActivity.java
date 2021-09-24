@@ -10,6 +10,8 @@ import android.os.IBinder;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.lilioss.lifecycle.library.ISimpleAidlInterface;
@@ -30,7 +32,16 @@ public class InstallPackagesActivity extends AppCompatActivity {
   private final JavaThread javaThread = new JavaThread(TAG);
   private final NativeThread nativeThread = new NativeThread(TAG);
 
+  private Button buttonConnect;
+  private Button buttonShare;
+  private Button buttonForkRemote;
+  private Button buttonForkLocal;
+  private Button buttonCleanRemote;
+  private Button buttonCleanLocal;
+  private Button buttonDisconnect;
+
   private ISimpleAidlInterface mSimpleManager = null;
+  private int mFd = -1;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +69,71 @@ public class InstallPackagesActivity extends AppCompatActivity {
       Log.i(TAG, "INSTALL_PACKAGES permission denied");
     }
 
+    buttonConnect = findViewById(R.id.buttonConnect);
+    buttonConnect.setOnClickListener(new View.OnClickListener() {
+      public void onClick(View v) {
+        // Code here executes on main thread after user presses button
+        Log.i(TAG, "onClick(Connect)");
+        connect();
+      }
+    });
+
+    buttonDisconnect = findViewById(R.id.buttonDisconnect);
+    buttonDisconnect.setOnClickListener(new View.OnClickListener() {
+      public void onClick(View v) {
+        // Code here executes on main thread after user presses button
+        Log.i(TAG, "onClick(disconnect)");
+        disconnect();
+      }
+    });
+
+    buttonShare = findViewById(R.id.buttonShare);
+    buttonShare.findViewById(R.id.buttonShare).setOnClickListener(new View.OnClickListener() {
+      public void onClick(View v) {
+        // Code here executes on main thread after user presses button
+        Log.i(TAG, "onClick(share)");
+        share();
+      }
+    });
+
+    buttonForkRemote = findViewById(R.id.buttonForkRemote);
+    buttonForkRemote.setOnClickListener(new View.OnClickListener() {
+      public void onClick(View v) {
+        // Code here executes on main thread after user presses button
+        Log.i(TAG, "onClick(fork remote)");
+        forkRemote();
+      }
+    });
+
+    buttonForkLocal = findViewById(R.id.buttonForkLocal);
+    buttonForkLocal.setOnClickListener(new View.OnClickListener() {
+      public void onClick(View v) {
+        // Code here executes on main thread after user presses button
+        Log.i(TAG, "onClick(fork local)");
+        forkLocal();
+      }
+    });
+
+    buttonCleanRemote = findViewById(R.id.buttonCleanRemote);
+    buttonCleanRemote.setOnClickListener(new View.OnClickListener() {
+      public void onClick(View v) {
+        // Code here executes on main thread after user presses button
+        Log.i(TAG, "onClick(clean remote)");
+        cleanRemote();
+      }
+    });
+
+    buttonCleanLocal = findViewById(R.id.buttonCleanLocal);
+    buttonCleanLocal.setOnClickListener(new View.OnClickListener() {
+      public void onClick(View v) {
+        // Code here executes on main thread after user presses button
+        Log.i(TAG, "onClick(clean local)");
+        cleanLocal();
+      }
+    });
+
+    updateVisibility();
+
     javaThread.start();
   }
 
@@ -75,8 +151,6 @@ public class InstallPackagesActivity extends AppCompatActivity {
     startActionBaz(getApplicationContext(),
         "param1",
         "param2");
-
-    bindAIDLService();
   }
 
   @Override
@@ -98,6 +172,88 @@ public class InstallPackagesActivity extends AppCompatActivity {
     javaThread.finish();
   }
 
+  public void updateVisibility() {
+    if (mSimpleManager == null) {
+      buttonConnect.setEnabled(true);
+      buttonDisconnect.setEnabled(false);
+      buttonShare.setEnabled(false);
+      buttonForkRemote.setEnabled(false);
+      buttonForkLocal.setEnabled(false);
+      buttonCleanRemote.setEnabled(false);
+    } else {
+      buttonConnect.setEnabled(false);
+      buttonDisconnect.setEnabled(true);
+      buttonForkRemote.setEnabled(true);
+      buttonCleanRemote.setEnabled(true);
+
+      if (mFd == -1) {
+        buttonShare.setEnabled(true);
+        buttonForkLocal.setEnabled(false);
+      } else {
+        buttonShare.setEnabled(false);
+        buttonForkLocal.setEnabled(true);
+      }
+    }
+  }
+
+  public void connect() {
+    Intent intent = new Intent();
+    intent.setComponent(new ComponentName(PKG_NAME, AIDL_SVC));
+    intent.setAction(ACTION_AIDL);
+    bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);
+  }
+
+  public void disconnect() {
+    mSimpleManager = null;
+    unbindService(mServiceConnection);
+    updateVisibility();
+  }
+
+  public void share() {
+    try {
+      ParcelFileDescriptor pfd = mSimpleManager.shareFileLock();
+      if (pfd == null) {
+        Log.i(TAG, "Receive: null");
+        return;
+      }
+      mFd = pfd.detachFd();
+      Log.i(TAG, "Receive: " + mFd);
+      Log.i(TAG, "Original: " + nativeThread.getFD());
+      nativeThread.setFD(mFd);
+      nativeThread.start();
+      updateVisibility();
+    } catch (RemoteException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void forkRemote() {
+    try {
+      mSimpleManager.fork();
+    } catch (RemoteException e) {
+      e.printStackTrace();
+    }
+    updateVisibility();
+  }
+
+  public void forkLocal() {
+    nativeThread.setFD(mFd);
+    nativeThread.fork();
+  }
+
+  public void cleanRemote() {
+    try {
+      mSimpleManager.cleanFileLock();
+    } catch (RemoteException e) {
+      e.printStackTrace();
+    }
+    updateVisibility();
+  }
+
+  public void cleanLocal() {
+    nativeThread.finish();
+  }
+
   /**
    * Starts this service to perform action Baz with the given parameters. If the service is already
    * performing a task this action will be queued.
@@ -114,14 +270,6 @@ public class InstallPackagesActivity extends AppCompatActivity {
     context.startForegroundService(intent);
   }
 
-  public void bindAIDLService() {
-    Log.i(TAG, "bindAIDLService");
-    Intent intent = new Intent();
-    intent.setComponent(new ComponentName(PKG_NAME, AIDL_SVC));
-    intent.setAction(ACTION_AIDL);
-    bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);
-  }
-
   private final ServiceConnection mServiceConnection = new ServiceConnection() {
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
@@ -135,26 +283,18 @@ public class InstallPackagesActivity extends AppCompatActivity {
               3,
               4,
               "abc"));
-          ParcelFileDescriptor pfd = mSimpleManager.shareFile();
-          if (pfd == null) {
-            Log.i(TAG, "Receive: null");
-            return;
-          }
-          int fd = pfd.getFd();
-          Log.i(TAG, "Receive: " + fd);
-          Log.i(TAG, "Original: " + nativeThread.getFD());
-          nativeThread.setFD(fd);
-          nativeThread.start();
-          nativeThread.fork();
         } catch (RemoteException e) {
           e.printStackTrace();
         }
       }
+      updateVisibility();
     }
 
     @Override
     public void onServiceDisconnected(ComponentName name) {
       Log.i(TAG, "onServiceDisconnected");
+      mSimpleManager = null;
+      updateVisibility();
     }
   };
 }

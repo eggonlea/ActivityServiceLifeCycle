@@ -5,13 +5,47 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".InstallPackagesActivity">
-  <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="Hello World!"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:gravity="center"
+      android:orientation="vertical">
+    <Button
+        android:id="@+id/buttonConnect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/connect" />
+    <Button
+        android:id="@+id/buttonShare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/share" />
+    <Button
+        android:id="@+id/buttonForkRemote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/forkremote" />
+    <Button
+        android:id="@+id/buttonForkLocal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/forklocal" />
+    <Button
+        android:id="@+id/buttonCleanRemote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cleanremote" />
+    <Button
+        android:id="@+id/buttonCleanLocal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cleanlocal" />
+    <Button
+        android:id="@+id/buttonDisconnect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/disconnect" />
+  </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

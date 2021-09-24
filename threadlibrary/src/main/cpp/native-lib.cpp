@@ -9,11 +9,13 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+#define LOOP_MAX 1000000000
 #define FOOTPRINT __android_log_print(ANDROID_LOG_INFO, tag, "--- ===== %s() ===== ---", __func__)
 
 bool finished = false;
 char tag[64] = "NativeThread";
 int fd = -1;
+int loop = LOOP_MAX;
 
 void testCgroup()
 {
@@ -92,18 +94,23 @@ void testFileLock() {
   __android_log_print(ANDROID_LOG_INFO, tag, "locking %d", fd);
   int ret = fcntl(fd, F_SETLKW, &lock);
   __android_log_print(ANDROID_LOG_INFO, tag, "locked %d return %d", fd, ret);
+  if (ret < 0)
+    __android_log_print(ANDROID_LOG_INFO, tag, "(%d) %s", errno, strerror(errno));
 }
 
 void runLoop() {
   FOOTPRINT;
   int count = 0;
-  while (!finished) {
+  while (count < loop && !finished) {
     sleep(1);
-    __android_log_print(ANDROID_LOG_INFO, tag, "%d", count++);
+    __android_log_print(ANDROID_LOG_INFO, tag, "%d (%d)", count++, loop);
   }
+  finished = true;
 }
+
 void run() {
   __android_log_print(ANDROID_LOG_INFO, tag, "NativeThread start");
+  finished = false;
 
   if (fd >= 0) testFileLock();
 
@@ -111,7 +118,18 @@ void run() {
 
   if (fd >= 0) {
     __android_log_print(ANDROID_LOG_INFO, tag, "release lock %d", fd);
-    close(fd); // intentionally leave it open
+    close(fd);
+    fd = -1;
+  }
+}
+
+void housekeeping() {
+  while (true) {
+    int ret;
+    int pid = wait(&ret);
+    if (pid > 0)
+      __android_log_print(ANDROID_LOG_INFO, tag, "pid %d finished with %d", pid, ret);
+    sleep(1);
   }
 }
 
@@ -126,10 +144,7 @@ Java_com_lilioss_lifecycle_library_NativeThread_nativeTestCgroup(
   if (pid == 0) {
     setsid();
     testCgroup();
-    execl("/system/bin/true", "/system/bin/true");
-  } else {
-    int ret;
-    waitpid(pid, &ret, 0);
+    execl("/system/bin/true", "/system/bin/true", (char *) nullptr);
   }
 }
 
@@ -157,8 +172,9 @@ extern "C" JNIEXPORT int JNICALL
 Java_com_lilioss_lifecycle_library_NativeThread_nativeGetFD(
     JNIEnv* env,
     jobject /* this */) {
-  __android_log_print(ANDROID_LOG_INFO, tag, "GetFD(%d)", fd);
-  return fd;
+  int n = (fd == -1 ? -1 : dup(fd));
+  __android_log_print(ANDROID_LOG_INFO, tag, "%d = GetFD(%d)", n, fd);
+  return n;
 }
 
 extern "C" JNIEXPORT void JNICALL
@@ -166,12 +182,12 @@ Java_com_lilioss_lifecycle_library_NativeThread_nativeSetFD(
     JNIEnv* env,
     jobject /* this */,
     jint n) {
-  fd = n;
-  __android_log_print(ANDROID_LOG_INFO, tag, "SetFD(%d)", fd);
+  fd = dup(n);
+  __android_log_print(ANDROID_LOG_INFO, tag, "%d = SetFD(%d)", fd, n);
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_com_lilioss_lifecycle_library_NativeThread_nativeSetTag(
+Java_com_lilioss_lifecycle_library_NativeThread_nativeInit(
     JNIEnv* env,
     jobject /* this */,
     jstring s) {
@@ -180,12 +196,15 @@ Java_com_lilioss_lifecycle_library_NativeThread_nativeSetTag(
   strncpy(tag, str, 64);
   tag[63] = '\0';
   env->ReleaseStringUTFChars(s, str);
+  std::thread t(housekeeping);
+  t.detach();
 }
 
 extern "C" JNIEXPORT void JNICALL
 Java_com_lilioss_lifecycle_library_NativeThread_nativeStart(
     JNIEnv* env,
     jobject /* this */) {
+  loop = LOOP_MAX;
   std::thread t(run);
   t.detach();
 }
@@ -198,9 +217,11 @@ Java_com_lilioss_lifecycle_library_NativeThread_nativeFork(
   __android_log_print(ANDROID_LOG_INFO, tag, "fork %d", pid);
 
   if (pid == 0) {
+    loop = 10;
     setsid();
+    sleep(1);
     run();
-    execl("/system/bin/true", "/system/bin/true");
+    execl("/system/bin/true", "/system/bin/true", (char *) nullptr);
   }
 }
 

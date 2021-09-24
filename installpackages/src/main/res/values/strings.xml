@@ -1,3 +1,10 @@
 <resources>
   <string name="app_name">InstallPackages</string>
+  <string name="connect">Connect</string>
+  <string name="disconnect">Disconnect</string>
+  <string name="share">Share</string>
+  <string name="forkremote">Fork Remote</string>
+  <string name="forklocal">Fork Local</string>
+  <string name="cleanremote">Clean Remote</string>
+  <string name="cleanlocal">Clean Local</string>
 </resources>

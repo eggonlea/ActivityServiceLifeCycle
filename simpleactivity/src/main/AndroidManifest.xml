@@ -20,20 +20,26 @@
     <activity android:name=".SimpleActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
-
+        <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
 
-    <activity android:name=".CgroupFlockActivity">
+    <activity
+        android:name=".CgroupFlockActivity"
+        android:label="CgroupFlockActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
 
-    <activity android:name=".BackgroundActivity">
+    <activity
+        android:name=".BackgroundActivity"
+        android:label="BackgroundActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
 

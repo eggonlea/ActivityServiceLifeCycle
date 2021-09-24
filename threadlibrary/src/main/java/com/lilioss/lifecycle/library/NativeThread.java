@@ -15,7 +15,7 @@ public class NativeThread {
 
   public NativeThread(String s) {
     tag = "LifeCycle: std::thread_" + s;
-    nativeSetTag(tag);
+    nativeInit(tag);
   }
 
   public int openFD() {
@@ -55,7 +55,7 @@ public class NativeThread {
    * A native method that is implemented by the 'native-lib' native library, which is packaged with
    * this application.
    */
-  private native void nativeSetTag(String tag);
+  private native void nativeInit(String tag);
   private native int nativeOpenFD(String path);
   private native int nativeGetFD();
   private native void nativeSetFD(int fd);

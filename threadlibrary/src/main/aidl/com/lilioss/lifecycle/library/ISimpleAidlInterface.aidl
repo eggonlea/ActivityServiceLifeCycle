@@ -11,5 +11,7 @@ interface ISimpleAidlInterface {
     String basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat,
             double aDouble, String aString);
 
-    ParcelFileDescriptor shareFile();
+    ParcelFileDescriptor shareFileLock();
+    void cleanFileLock();
+    void fork();
 }
