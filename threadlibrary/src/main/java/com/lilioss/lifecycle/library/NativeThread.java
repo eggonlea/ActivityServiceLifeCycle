@@ -18,20 +18,24 @@ public class NativeThread {
     nativeSetTag(tag);
   }
 
-  public int getFD() {
-    return nativeGetFD(Environment
+  public int openFD() {
+    return nativeOpenFD(Environment
         .getExternalStoragePublicDirectory(DIRECTORY_DOWNLOADS)
         .getAbsolutePath());
   }
 
+  public int getFD() {
+    return nativeGetFD();
+  }
   public void setFD(int fd) {
     nativeSetFD(fd);
   }
-
   public void start() {
     nativeStart();
   }
-
+  public void fork() {
+    nativeFork();
+  }
   public void finish() {
     nativeFinish();
   }
@@ -52,9 +56,11 @@ public class NativeThread {
    * this application.
    */
   private native void nativeSetTag(String tag);
-  private native int nativeGetFD(String path);
+  private native int nativeOpenFD(String path);
+  private native int nativeGetFD();
   private native void nativeSetFD(int fd);
   private native void nativeStart();
+  private native void nativeFork();
   private native void nativeFinish();
 
   /**

@@ -84,8 +84,6 @@ void testOverload() {
 
 void testFileLock() {
   FOOTPRINT;
-  int pid = fork();
-  __android_log_print(ANDROID_LOG_INFO, tag, "fork %d", pid);
   struct flock lock;
   lock.l_type = F_WRLCK;
   lock.l_start = 0;
@@ -126,9 +124,8 @@ Java_com_lilioss_lifecycle_library_NativeThread_nativeTestCgroup(
   __android_log_print(ANDROID_LOG_INFO, tag, "fork %d", pid);
 
   if (pid == 0) {
+    setsid();
     testCgroup();
-
-    // clean up VM code
     execl("/system/bin/true", "/system/bin/true");
   } else {
     int ret;
@@ -144,7 +141,7 @@ Java_com_lilioss_lifecycle_library_NativeThread_nativeTestOverload(
 }
 
 extern "C" JNIEXPORT int JNICALL
-Java_com_lilioss_lifecycle_library_NativeThread_nativeGetFD(
+Java_com_lilioss_lifecycle_library_NativeThread_nativeOpenFD(
     JNIEnv* env,
     jobject /* this */,
     jstring path) {
@@ -153,6 +150,14 @@ Java_com_lilioss_lifecycle_library_NativeThread_nativeGetFD(
   snprintf(fname, 1024, "%s/%s", str, "file_lock");
   fd = open(fname, O_CREAT | O_RDWR, S_IRWXU | S_IRWXG | S_IRWXO);
   __android_log_print(ANDROID_LOG_INFO, tag, "open %d (%s) %d %s", fd, fname, errno, strerror(errno));
+  return fd;
+}
+
+extern "C" JNIEXPORT int JNICALL
+Java_com_lilioss_lifecycle_library_NativeThread_nativeGetFD(
+    JNIEnv* env,
+    jobject /* this */) {
+  __android_log_print(ANDROID_LOG_INFO, tag, "GetFD(%d)", fd);
   return fd;
 }
 
@@ -183,6 +188,20 @@ Java_com_lilioss_lifecycle_library_NativeThread_nativeStart(
     jobject /* this */) {
   std::thread t(run);
   t.detach();
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_com_lilioss_lifecycle_library_NativeThread_nativeFork(
+    JNIEnv* env,
+    jobject /* this */) {
+  int pid = fork();
+  __android_log_print(ANDROID_LOG_INFO, tag, "fork %d", pid);
+
+  if (pid == 0) {
+    setsid();
+    run();
+    execl("/system/bin/true", "/system/bin/true");
+  }
 }
 
 extern "C" JNIEXPORT void JNICALL

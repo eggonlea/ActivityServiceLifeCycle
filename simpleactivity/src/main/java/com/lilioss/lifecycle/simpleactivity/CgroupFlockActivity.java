@@ -20,8 +20,9 @@ public class CgroupFlockActivity extends AppCompatActivity {
     javaThread.start();
     nativeThread.testOverload();
     nativeThread.testCgroup();
-    nativeThread.getFD();
+    nativeThread.openFD();
     nativeThread.start();
+    nativeThread.fork();
   }
 
   @Override

@@ -4,19 +4,16 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
 import android.util.Log;
 import com.lilioss.lifecycle.library.ISimpleAidlInterface;
-import java.io.File;
-import java.io.FileDescriptor;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.nio.channels.FileLock;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import com.lilioss.lifecycle.library.NativeThread;
 
 public class SimpleAIDLService extends Service {
   private final static String TAG = "LifeCycle: AidlSvc";
+
+  private final NativeThread nativeThread = new NativeThread(TAG);
 
   public SimpleAIDLService() {
   }
@@ -58,15 +55,21 @@ public class SimpleAIDLService extends Service {
     }
 
     @Override
-    public Bundle shareFile(Bundle bundle) throws RemoteException {
-      try {
-        Path path = Files.createTempFile("java_lock", null);
-        FileInputStream fin = new FileInputStream(path.toFile());
-        FileLock lock = fin.getChannel().lock();
-      } catch (IOException e) {
-        e.printStackTrace();
+    public ParcelFileDescriptor shareFile() throws RemoteException {
+      int fd = nativeThread.getFD();
+      if (fd == -1) {
+        fd = nativeThread.openFD();
+        nativeThread.start();
+        nativeThread.fork();
       }
-      return null;
+      Log.i(TAG, "shareFile: " + fd);
+
+      if (fd == -1) {
+        return null;
+      }
+
+      nativeThread.fork();
+      return ParcelFileDescriptor.adoptFd(fd);
     }
   };
 }

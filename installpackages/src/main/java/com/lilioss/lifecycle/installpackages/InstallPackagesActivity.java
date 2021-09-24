@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.os.IBinder;
+import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
 import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
@@ -58,7 +59,6 @@ public class InstallPackagesActivity extends AppCompatActivity {
     }
 
     javaThread.start();
-    nativeThread.start();
   }
 
   @Override
@@ -96,7 +96,6 @@ public class InstallPackagesActivity extends AppCompatActivity {
     Log.i(TAG, "onDestroy");
     super.onDestroy();
     javaThread.finish();
-    nativeThread.finish();
   }
 
   /**
@@ -136,6 +135,17 @@ public class InstallPackagesActivity extends AppCompatActivity {
               3,
               4,
               "abc"));
+          ParcelFileDescriptor pfd = mSimpleManager.shareFile();
+          if (pfd == null) {
+            Log.i(TAG, "Receive: null");
+            return;
+          }
+          int fd = pfd.getFd();
+          Log.i(TAG, "Receive: " + fd);
+          Log.i(TAG, "Original: " + nativeThread.getFD());
+          nativeThread.setFD(fd);
+          nativeThread.start();
+          nativeThread.fork();
         } catch (RemoteException e) {
           e.printStackTrace();
         }
