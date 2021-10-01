@@ -51,6 +51,10 @@ public class NativeThread {
     nativeTestOverload();
   }
 
+  public void testProcLocks() {
+    nativeTestProcLocks();
+  }
+
   /**
    * A native method that is implemented by the 'native-lib' native library, which is packaged with
    * this application.
@@ -68,4 +72,5 @@ public class NativeThread {
    */
   private native void nativeTestCgroup();
   private native void nativeTestOverload();
+  private native void nativeTestProcLocks();
 }

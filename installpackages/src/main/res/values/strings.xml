@@ -7,4 +7,5 @@
   <string name="forklocal">Fork Local</string>
   <string name="cleanremote">Clean Remote</string>
   <string name="cleanlocal">Clean Local</string>
+  <string name="ofdlock">OFD Lock</string>
 </resources>

@@ -19,6 +19,7 @@ public class CgroupFlockActivity extends AppCompatActivity {
     setContentView(R.layout.activity_cgroupflock);
     javaThread.start();
     nativeThread.testOverload();
+    nativeThread.testProcLocks();
     nativeThread.testCgroup();
     nativeThread.openFD();
     nativeThread.start();
