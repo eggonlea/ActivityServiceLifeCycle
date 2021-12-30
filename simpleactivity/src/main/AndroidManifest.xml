@@ -3,6 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.lilioss.lifecycle.simpleactivity">
 
+  <uses-permission android:name="android.Manifest.permission.WRITE_EXTERNAL_STORAGE" />
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+  <uses-permission
+      android:name="android.permission.QUERY_ALL_PACKAGES"
+      tools:ignore="QueryAllPackagesPermission" />
+  <uses-permission android:name="android.Manifest.permission.READ_EXTERNAL_STORAGE" />
+
   <application
       android:allowBackup="true"
       android:icon="@mipmap/ic_launcher"
@@ -11,10 +18,10 @@
       android:roundIcon="@mipmap/ic_launcher_round"
       android:supportsRtl="true"
       android:theme="@style/Theme.ActivityServiceLifeCycle">
+
     <activity android:name=".SimpleActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
-
         <category android:name="android.intent.category.DEFAULT" />
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
@@ -25,19 +32,35 @@
         android:label="CgroupFlockActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
-
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
+
     <activity
         android:name=".BackgroundActivity"
         android:label="BackgroundActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
-
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
+
+    <activity
+        android:name=".BatteryActivity"
+        android:label="BatteryActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.BATTERY_CHANGED" />
+        <action android:name="android.intent.action.BATTERY_LOW" />
+        <action android:name="android.intent.action.BATTERY_OKAY" />
+        <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+        <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+      </intent-filter>
+    </activity>
+
     <provider
         android:name=".SimpleContentProvider"
         android:authorities="com.lilioss.simpleactivity.provider"
@@ -52,6 +75,7 @@
         <action android:name="com.lilioss.lifecycle.simpleactivity.action.BAZ" />
       </intent-filter>
     </service>
+
     <service
         android:name=".SimpleAIDLService"
         android:enabled="true"
@@ -60,13 +84,7 @@
         <action android:name="com.lilioss.lifecycle.simpleactivity.action.aidl" />
       </intent-filter>
     </service>
-  </application>
-  <uses-permission android:name="android.Manifest.permission.WRITE_EXTERNAL_STORAGE" />
-  <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-  <uses-permission
-      android:name="android.permission.QUERY_ALL_PACKAGES"
-      tools:ignore="QueryAllPackagesPermission" />
 
-  <uses-permission android:name="android.Manifest.permission.READ_EXTERNAL_STORAGE" />
+  </application>
 
 </manifest>

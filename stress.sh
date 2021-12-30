@@ -10,7 +10,8 @@ while [ $II -lt 5000 ];
 do
   echo "Iteration $II"
   #adb shell am start -n com.lilioss.lifecycle.simpleactivity/.SimpleActivity
-  adb shell am start -n com.lilioss.lifecycle.simpleactivity/.BackgroundActivity
+  #adb shell am start -n com.lilioss.lifecycle.simpleactivity/.BackgroundActivity
+  adb shell am start -n com.lilioss.lifecycle.simpleactivity/.BatteryActivity
   sleep 1
   adb shell am start -n com.android.settings/.homepage.SettingsHomepageActivity
   sleep 1
@@ -26,7 +27,7 @@ do
   PID3=`pid.sh com.android.settings`
   echo "pid $PID1 $PID2 $PID3"
   #adb logcat -d | grep -E "FAILED BINDER TRANSACTION|DeadObjectException|freeze binder"
-  adb logcat -d | grep -E "FAILED BINDER TRANSACTION|DeadObjectException|freeze binder" | grep -E "$PID1|$PID2|$PID3"
+  adb logcat -d | grep -E "FAILED BINDER TRANSACTION|DeadObjectException|freeze binder|29202" | grep -E "$PID1|$PID2|$PID3"
   if [ $? -eq 0 ];
   then
     echo "ERROR FOUND"

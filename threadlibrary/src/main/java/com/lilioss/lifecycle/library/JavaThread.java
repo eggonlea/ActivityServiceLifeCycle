@@ -84,6 +84,7 @@ public class JavaThread extends Thread {
         } catch (RemoteException e) {
           e.printStackTrace();
         }
+
         if (callback != null) {
           if (bundle == null) {
             callback.onCallback("null bundle");
@@ -93,6 +94,10 @@ public class JavaThread extends Thread {
             callback.onCallback("calling_package = " + bundle.getString("calling_package"));
           }
         }
+      }
+
+      if (callback != null) {
+        callback.onCallback("callback");
       }
     }
   }

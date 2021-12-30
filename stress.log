@@ -1,0 +1,204 @@
+adbd is already running as root
+Iteration 0
+Starting: Intent { cmp=com.lilioss.lifecycle.simpleactivity/.BatteryActivity }
+Starting: Intent { cmp=com.android.settings/.homepage.SettingsHomepageActivity }
+Starting: Intent { cmp=com.google.android.deskclock/com.android.deskclock.DeskClock }
+Starting: Intent { cmp=com.google.android.calculator/com.android.calculator2.Calculator }
+pid 25947 13930 18243
+Iteration 1
+Starting: Intent { cmp=com.lilioss.lifecycle.simpleactivity/.BatteryActivity }
+Starting: Intent { cmp=com.android.settings/.homepage.SettingsHomepageActivity }
+Starting: Intent { cmp=com.google.android.deskclock/com.android.deskclock.DeskClock }
+Starting: Intent { cmp=com.google.android.calculator/com.android.calculator2.Calculator }
+pid 25947 13930 18243
+Iteration 2
+Starting: Intent { cmp=com.lilioss.lifecycle.simpleactivity/.BatteryActivity }
+Starting: Intent { cmp=com.android.settings/.homepage.SettingsHomepageActivity }
+Starting: Intent { cmp=com.google.android.deskclock/com.android.deskclock.DeskClock }
+Starting: Intent { cmp=com.google.android.calculator/com.android.calculator2.Calculator }
+pid 25947 13930 18243
+Iteration 3
+Starting: Intent { cmp=com.lilioss.lifecycle.simpleactivity/.BatteryActivity }
+Starting: Intent { cmp=com.android.settings/.homepage.SettingsHomepageActivity }
+Starting: Intent { cmp=com.google.android.deskclock/com.android.deskclock.DeskClock }
+Starting: Intent { cmp=com.google.android.calculator/com.android.calculator2.Calculator }
+pid 25947 13930 18243
+Iteration 4
+Starting: Intent { cmp=com.lilioss.lifecycle.simpleactivity/.BatteryActivity }
+Starting: Intent { cmp=com.android.settings/.homepage.SettingsHomepageActivity }
+Starting: Intent { cmp=com.google.android.deskclock/com.android.deskclock.DeskClock }
+Starting: Intent { cmp=com.google.android.calculator/com.android.calculator2.Calculator }
+pid 25947 13930 18243
+Iteration 5
+Starting: Intent { cmp=com.lilioss.lifecycle.simpleactivity/.BatteryActivity }
+Starting: Intent { cmp=com.android.settings/.homepage.SettingsHomepageActivity }
+Starting: Intent { cmp=com.google.android.deskclock/com.android.deskclock.DeskClock }
+Starting: Intent { cmp=com.google.android.calculator/com.android.calculator2.Calculator }
+pid 25947 13930 18243
+Iteration 6
+Starting: Intent { cmp=com.lilioss.lifecycle.simpleactivity/.BatteryActivity }
+Starting: Intent { cmp=com.android.settings/.homepage.SettingsHomepageActivity }
+Starting: Intent { cmp=com.google.android.deskclock/com.android.deskclock.DeskClock }
+Starting: Intent { cmp=com.google.android.calculator/com.android.calculator2.Calculator }
+pid 25947 13930 18243
+Iteration 7
+Starting: Intent { cmp=com.lilioss.lifecycle.simpleactivity/.BatteryActivity }
+Starting: Intent { cmp=com.android.settings/.homepage.SettingsHomepageActivity }
+Starting: Intent { cmp=com.google.android.deskclock/com.android.deskclock.DeskClock }
+Starting: Intent { cmp=com.google.android.calculator/com.android.calculator2.Calculator }
+pid 25947 13930 18243
+Iteration 8
+Starting: Intent { cmp=com.lilioss.lifecycle.simpleactivity/.BatteryActivity }
+Starting: Intent { cmp=com.android.settings/.homepage.SettingsHomepageActivity }
+Starting: Intent { cmp=com.google.android.deskclock/com.android.deskclock.DeskClock }
+Starting: Intent { cmp=com.google.android.calculator/com.android.calculator2.Calculator }
+pid 25947 13930 18243
+Iteration 9
+Starting: Intent { cmp=com.lilioss.lifecycle.simpleactivity/.BatteryActivity }
+Starting: Intent { cmp=com.android.settings/.homepage.SettingsHomepageActivity }
+Starting: Intent { cmp=com.google.android.deskclock/com.android.deskclock.DeskClock }
+Starting: Intent { cmp=com.google.android.calculator/com.android.calculator2.Calculator }
+pid 25947 13930 18243
+Iteration 10
+Starting: Intent { cmp=com.lilioss.lifecycle.simpleactivity/.BatteryActivity }
+Starting: Intent { cmp=com.android.settings/.homepage.SettingsHomepageActivity }
+Starting: Intent { cmp=com.google.android.deskclock/com.android.deskclock.DeskClock }
+Starting: Intent { cmp=com.google.android.calculator/com.android.calculator2.Calculator }
+pid 25947 13930 18243
+Iteration 11
+Starting: Intent { cmp=com.lilioss.lifecycle.simpleactivity/.BatteryActivity }
+Starting: Intent { cmp=com.android.settings/.homepage.SettingsHomepageActivity }
+Starting: Intent { cmp=com.google.android.deskclock/com.android.deskclock.DeskClock }
+Starting: Intent { cmp=com.google.android.calculator/com.android.calculator2.Calculator }
+pid 25947 13930 18243
+Iteration 12
+Starting: Intent { cmp=com.lilioss.lifecycle.simpleactivity/.BatteryActivity }
+Starting: Intent { cmp=com.android.settings/.homepage.SettingsHomepageActivity }
+Starting: Intent { cmp=com.google.android.deskclock/com.android.deskclock.DeskClock }
+Starting: Intent { cmp=com.google.android.calculator/com.android.calculator2.Calculator }
+pid 25947 13930 18243
+Iteration 13
+Starting: Intent { cmp=com.lilioss.lifecycle.simpleactivity/.BatteryActivity }
+Starting: Intent { cmp=com.android.settings/.homepage.SettingsHomepageActivity }
+Starting: Intent { cmp=com.google.android.deskclock/com.android.deskclock.DeskClock }
+Starting: Intent { cmp=com.google.android.calculator/com.android.calculator2.Calculator }
+pid 25947 13930 18243
+Iteration 14
+Starting: Intent { cmp=com.lilioss.lifecycle.simpleactivity/.BatteryActivity }
+Starting: Intent { cmp=com.android.settings/.homepage.SettingsHomepageActivity }
+Starting: Intent { cmp=com.google.android.deskclock/com.android.deskclock.DeskClock }
+Starting: Intent { cmp=com.google.android.calculator/com.android.calculator2.Calculator }
+pid 25947 13930 18243
+Iteration 15
+Starting: Intent { cmp=com.lilioss.lifecycle.simpleactivity/.BatteryActivity }
+Starting: Intent { cmp=com.android.settings/.homepage.SettingsHomepageActivity }
+Starting: Intent { cmp=com.google.android.deskclock/com.android.deskclock.DeskClock }
+Starting: Intent { cmp=com.google.android.calculator/com.android.calculator2.Calculator }
+pid 25947 13930 18243
+Iteration 16
+Starting: Intent { cmp=com.lilioss.lifecycle.simpleactivity/.BatteryActivity }
+Starting: Intent { cmp=com.android.settings/.homepage.SettingsHomepageActivity }
+Starting: Intent { cmp=com.google.android.deskclock/com.android.deskclock.DeskClock }
+Starting: Intent { cmp=com.google.android.calculator/com.android.calculator2.Calculator }
+pid 25947 13930 18243
+Iteration 17
+Starting: Intent { cmp=com.lilioss.lifecycle.simpleactivity/.BatteryActivity }
+Starting: Intent { cmp=com.android.settings/.homepage.SettingsHomepageActivity }
+Starting: Intent { cmp=com.google.android.deskclock/com.android.deskclock.DeskClock }
+Starting: Intent { cmp=com.google.android.calculator/com.android.calculator2.Calculator }
+pid 25947 13930 18243
+Iteration 18
+Starting: Intent { cmp=com.lilioss.lifecycle.simpleactivity/.BatteryActivity }
+Starting: Intent { cmp=com.android.settings/.homepage.SettingsHomepageActivity }
+Starting: Intent { cmp=com.google.android.deskclock/com.android.deskclock.DeskClock }
+Starting: Intent { cmp=com.google.android.calculator/com.android.calculator2.Calculator }
+pid 25947 13930 18243
+Iteration 19
+Starting: Intent { cmp=com.lilioss.lifecycle.simpleactivity/.BatteryActivity }
+Starting: Intent { cmp=com.android.settings/.homepage.SettingsHomepageActivity }
+Starting: Intent { cmp=com.google.android.deskclock/com.android.deskclock.DeskClock }
+Starting: Intent { cmp=com.google.android.calculator/com.android.calculator2.Calculator }
+pid 25947 13930 18243
+Iteration 20
+Starting: Intent { cmp=com.lilioss.lifecycle.simpleactivity/.BatteryActivity }
+Starting: Intent { cmp=com.android.settings/.homepage.SettingsHomepageActivity }
+Starting: Intent { cmp=com.google.android.deskclock/com.android.deskclock.DeskClock }
+Starting: Intent { cmp=com.google.android.calculator/com.android.calculator2.Calculator }
+pid 25947 13930 18243
+Iteration 21
+Starting: Intent { cmp=com.lilioss.lifecycle.simpleactivity/.BatteryActivity }
+Starting: Intent { cmp=com.android.settings/.homepage.SettingsHomepageActivity }
+Starting: Intent { cmp=com.google.android.deskclock/com.android.deskclock.DeskClock }
+Starting: Intent { cmp=com.google.android.calculator/com.android.calculator2.Calculator }
+pid 25947 13930 18243
+Iteration 22
+Starting: Intent { cmp=com.lilioss.lifecycle.simpleactivity/.BatteryActivity }
+Starting: Intent { cmp=com.android.settings/.homepage.SettingsHomepageActivity }
+Starting: Intent { cmp=com.google.android.deskclock/com.android.deskclock.DeskClock }
+Starting: Intent { cmp=com.google.android.calculator/com.android.calculator2.Calculator }
+pid 25947 13930 18243
+Iteration 23
+Starting: Intent { cmp=com.lilioss.lifecycle.simpleactivity/.BatteryActivity }
+Starting: Intent { cmp=com.android.settings/.homepage.SettingsHomepageActivity }
+Starting: Intent { cmp=com.google.android.deskclock/com.android.deskclock.DeskClock }
+Starting: Intent { cmp=com.google.android.calculator/com.android.calculator2.Calculator }
+pid 25947 13930 18243
+Iteration 24
+Starting: Intent { cmp=com.lilioss.lifecycle.simpleactivity/.BatteryActivity }
+Starting: Intent { cmp=com.android.settings/.homepage.SettingsHomepageActivity }
+Starting: Intent { cmp=com.google.android.deskclock/com.android.deskclock.DeskClock }
+Starting: Intent { cmp=com.google.android.calculator/com.android.calculator2.Calculator }
+pid 25947 13930 18243
+Iteration 25
+Starting: Intent { cmp=com.lilioss.lifecycle.simpleactivity/.BatteryActivity }
+Starting: Intent { cmp=com.android.settings/.homepage.SettingsHomepageActivity }
+Starting: Intent { cmp=com.google.android.deskclock/com.android.deskclock.DeskClock }
+Starting: Intent { cmp=com.google.android.calculator/com.android.calculator2.Calculator }
+pid 25947 13930 18243
+Iteration 26
+Starting: Intent { cmp=com.lilioss.lifecycle.simpleactivity/.BatteryActivity }
+Starting: Intent { cmp=com.android.settings/.homepage.SettingsHomepageActivity }
+Starting: Intent { cmp=com.google.android.deskclock/com.android.deskclock.DeskClock }
+Starting: Intent { cmp=com.google.android.calculator/com.android.calculator2.Calculator }
+pid 25947 13930 18243
+Iteration 27
+Starting: Intent { cmp=com.lilioss.lifecycle.simpleactivity/.BatteryActivity }
+Starting: Intent { cmp=com.android.settings/.homepage.SettingsHomepageActivity }
+Starting: Intent { cmp=com.google.android.deskclock/com.android.deskclock.DeskClock }
+Starting: Intent { cmp=com.google.android.calculator/com.android.calculator2.Calculator }
+pid 25947 13930 18243
+Iteration 28
+Starting: Intent { cmp=com.lilioss.lifecycle.simpleactivity/.BatteryActivity }
+Starting: Intent { cmp=com.android.settings/.homepage.SettingsHomepageActivity }
+Starting: Intent { cmp=com.google.android.deskclock/com.android.deskclock.DeskClock }
+Starting: Intent { cmp=com.google.android.calculator/com.android.calculator2.Calculator }
+pid 25947 13930 18243
+Iteration 29
+Starting: Intent { cmp=com.lilioss.lifecycle.simpleactivity/.BatteryActivity }
+Starting: Intent { cmp=com.android.settings/.homepage.SettingsHomepageActivity }
+Starting: Intent { cmp=com.google.android.deskclock/com.android.deskclock.DeskClock }
+Starting: Intent { cmp=com.google.android.calculator/com.android.calculator2.Calculator }
+pid 25947 13930 18243
+Iteration 30
+Starting: Intent { cmp=com.lilioss.lifecycle.simpleactivity/.BatteryActivity }
+Starting: Intent { cmp=com.android.settings/.homepage.SettingsHomepageActivity }
+Starting: Intent { cmp=com.google.android.deskclock/com.android.deskclock.DeskClock }
+Starting: Intent { cmp=com.google.android.calculator/com.android.calculator2.Calculator }
+pid 25947 13930 18243
+Iteration 31
+Starting: Intent { cmp=com.lilioss.lifecycle.simpleactivity/.BatteryActivity }
+Starting: Intent { cmp=com.android.settings/.homepage.SettingsHomepageActivity }
+Starting: Intent { cmp=com.google.android.deskclock/com.android.deskclock.DeskClock }
+Starting: Intent { cmp=com.google.android.calculator/com.android.calculator2.Calculator }
+pid 25947 13930 18243
+Iteration 32
+Starting: Intent { cmp=com.lilioss.lifecycle.simpleactivity/.BatteryActivity }
+Starting: Intent { cmp=com.android.settings/.homepage.SettingsHomepageActivity }
+Starting: Intent { cmp=com.google.android.deskclock/com.android.deskclock.DeskClock }
+Starting: Intent { cmp=com.google.android.calculator/com.android.calculator2.Calculator }
+pid 25947 13930 18243
+Iteration 33
+Starting: Intent { cmp=com.lilioss.lifecycle.simpleactivity/.BatteryActivity }
+Starting: Intent { cmp=com.android.settings/.homepage.SettingsHomepageActivity }
+Starting: Intent { cmp=com.google.android.deskclock/com.android.deskclock.DeskClock }
+Starting: Intent { cmp=com.google.android.calculator/com.android.calculator2.Calculator }
