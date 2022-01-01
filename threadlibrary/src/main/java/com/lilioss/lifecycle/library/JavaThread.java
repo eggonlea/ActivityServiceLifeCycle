@@ -82,6 +82,7 @@ public class JavaThread extends Thread {
         try {
           bundle = client.call(METHOD_NAME, null, null);
         } catch (RemoteException e) {
+          Log.i(tag, "Failed to call " + AUTHORITY + "/" + METHOD_NAME);
           e.printStackTrace();
         }
 

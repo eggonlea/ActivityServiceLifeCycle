@@ -12,7 +12,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import com.lilioss.lifecycle.library.JavaThread;
 import com.lilioss.lifecycle.library.JavaThread.JavaThreadCallback;
-import com.lilioss.lifecycle.library.NativeThread;
 
 public class BatteryActivity extends AppCompatActivity implements JavaThreadCallback {
 
