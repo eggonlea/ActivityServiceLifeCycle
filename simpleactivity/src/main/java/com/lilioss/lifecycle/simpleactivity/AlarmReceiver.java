@@ -48,6 +48,6 @@ public class AlarmReceiver extends BroadcastReceiver {
     Log.i(TAG, "onReceive");
     Log.i(TAG, "--------- context=" + context);
     Log.i(TAG, "--------- intent=" + intent);
-    Toast.makeText(context, "onReceive", Toast.LENGTH_SHORT).show();
+    Toast.makeText(context, "onReceive", Toast.LENGTH_LONG).show();
   }
 }
