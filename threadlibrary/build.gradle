@@ -34,6 +34,7 @@ android {
             version '3.10.2'
         }
     }
+    namespace 'com.lilioss.lifecycle.library'
 }
 
 dependencies {
