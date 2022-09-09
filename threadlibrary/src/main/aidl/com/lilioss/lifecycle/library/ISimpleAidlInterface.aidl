@@ -14,4 +14,5 @@ interface ISimpleAidlInterface {
     ParcelFileDescriptor shareFileLock();
     void cleanFileLock();
     void fork();
+    oneway void count(int i);
 }

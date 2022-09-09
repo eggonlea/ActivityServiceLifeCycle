@@ -2,7 +2,6 @@ package com.lilioss.lifecycle.simpleactivity;
 
 import android.app.Service;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.IBinder;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
@@ -15,6 +14,7 @@ public class SimpleAIDLService extends Service {
 
   private final NativeThread nativeThread = new NativeThread(TAG);
   private int mFd = -1;
+  private int mCount = -1;
 
   public SimpleAIDLService() {
   }
@@ -84,6 +84,24 @@ public class SimpleAIDLService extends Service {
     public void fork() throws RemoteException {
       nativeThread.setFD(mFd);
       nativeThread.fork();
+    }
+
+    @Override
+    public void count(int i) {
+      Log.i(TAG, "Recv counting " + i);
+      if (i == 0) {
+        Log.i(TAG, "New counting");
+      } else if (mCount + 1 > i) {
+        Log.w(TAG, "Out of order counting!");
+      } else if (mCount + 1 < i) {
+        Log.w(TAG, "Missing counting!");
+      }
+      mCount = i;
+      try {
+        Thread.sleep(10);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
     }
   };
 }

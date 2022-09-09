@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.appcompat.widget.SwitchCompat;
 import com.lilioss.lifecycle.library.ISimpleAidlInterface;
 import com.lilioss.lifecycle.library.JavaThread;
 import com.lilioss.lifecycle.library.NativeThread;
@@ -39,9 +40,12 @@ public class InstallPackagesActivity extends AppCompatActivity {
   private Button buttonCleanRemote;
   private Button buttonCleanLocal;
   private Button buttonDisconnect;
+  private SwitchCompat switchCount;
 
   private ISimpleAidlInterface mSimpleManager = null;
   private int mFd = -1;
+  private boolean mCounting = false;
+  private Thread mCountThread = null;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +88,50 @@ public class InstallPackagesActivity extends AppCompatActivity {
         // Code here executes on main thread after user presses button
         Log.i(TAG, "onClick(disconnect)");
         disconnect();
+      }
+    });
+
+    switchCount = findViewById(R.id.switchCount);
+    switchCount.setOnClickListener(new View.OnClickListener() {
+      public void onClick(View v) {
+        // Code here executes on main thread after user presses button
+        Log.i(TAG, "onClick(count)");
+        if (switchCount.isChecked()) {
+          mCounting = true;
+          mCountThread = new Thread() {
+            /**
+             * When an object implementing interface <code>Runnable</code> is
+             * used to create a thread, starting the thread causes the
+             * object's
+             * <code>run</code> method to be called in that separately
+             * executing thread.
+             * <p>
+             * The general contract of the method <code>run</code> is that it
+             * may take any action whatsoever.
+             *
+             * @see Thread#run()
+             */
+            @Override
+            public void run() {
+              int i = 0;
+              Log.i(TAG, "Start counting");
+              while (mCounting && mSimpleManager != null) {
+                try {
+                  mSimpleManager.count(i);
+                  Log.i(TAG, "Send counting " + i);
+                  i++;
+                } catch (RemoteException e) {
+                  e.printStackTrace();
+                }
+              }
+              Log.i(TAG, "Stop counting");
+              mCounting = false;
+            }
+          };
+          mCountThread.start();
+        } else {
+          mCounting = false;
+        }
       }
     });
 
