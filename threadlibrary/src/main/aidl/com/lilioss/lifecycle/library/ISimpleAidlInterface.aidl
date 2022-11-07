@@ -15,4 +15,5 @@ interface ISimpleAidlInterface {
     void cleanFileLock();
     void fork();
     oneway void count(int i);
+    String deadlock(String lock);
 }

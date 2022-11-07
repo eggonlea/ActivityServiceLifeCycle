@@ -97,11 +97,16 @@ public class SimpleAIDLService extends Service {
         Log.w(TAG, "Missing counting!");
       }
       mCount = i;
-      try {
-        Thread.sleep(10);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
+    }
+
+    @Override
+    public String deadlock(String lock) throws RemoteException {
+      String aidl = getApplicationContext().getCacheDir() + "/lock.aidl";
+      String simple = getApplicationContext().getCacheDir() + "/lock.simple";
+      nativeThread.lockLocal(aidl);
+      nativeThread.lockRemote(simple);
+      nativeThread.lockRemote(lock);
+      return aidl;
     }
   };
 }

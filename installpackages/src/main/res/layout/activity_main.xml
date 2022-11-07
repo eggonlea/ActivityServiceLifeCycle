@@ -21,6 +21,11 @@
         android:layout_height="wrap_content"
         android:minHeight="48dp"
         android:text="@string/count" />
+    <Button
+        android:id="@+id/buttonDeadlock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/deadlock" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

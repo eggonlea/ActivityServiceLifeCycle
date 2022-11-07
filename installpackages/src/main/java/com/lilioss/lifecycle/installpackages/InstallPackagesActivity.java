@@ -35,6 +35,7 @@ public class InstallPackagesActivity extends AppCompatActivity {
 
   private Button buttonConnect;
   private Button buttonShare;
+  private Button buttonDeadlock;
   private Button buttonForkRemote;
   private Button buttonForkLocal;
   private Button buttonCleanRemote;
@@ -120,7 +121,8 @@ public class InstallPackagesActivity extends AppCompatActivity {
                   mSimpleManager.count(i);
                   Log.i(TAG, "Send counting " + i);
                   i++;
-                } catch (RemoteException e) {
+                  Thread.sleep(1000);
+                } catch (InterruptedException | RemoteException e) {
                   e.printStackTrace();
                 }
               }
@@ -132,6 +134,15 @@ public class InstallPackagesActivity extends AppCompatActivity {
         } else {
           mCounting = false;
         }
+      }
+    });
+
+    buttonDeadlock = findViewById(R.id.buttonDeadlock);
+    buttonDeadlock.findViewById(R.id.buttonDeadlock).setOnClickListener(new View.OnClickListener() {
+      public void onClick(View v) {
+        // Code here executes on main thread after user presses button
+        Log.i(TAG, "onClick(deadlock)");
+        deadlock();
       }
     });
 
@@ -224,6 +235,7 @@ public class InstallPackagesActivity extends AppCompatActivity {
     if (mSimpleManager == null) {
       buttonConnect.setEnabled(true);
       buttonDisconnect.setEnabled(false);
+      buttonDeadlock.setEnabled(false);
       buttonShare.setEnabled(false);
       buttonForkRemote.setEnabled(false);
       buttonForkLocal.setEnabled(false);
@@ -231,6 +243,7 @@ public class InstallPackagesActivity extends AppCompatActivity {
     } else {
       buttonConnect.setEnabled(false);
       buttonDisconnect.setEnabled(true);
+      buttonDeadlock.setEnabled(true);
       buttonForkRemote.setEnabled(true);
       buttonCleanRemote.setEnabled(true);
 
@@ -255,6 +268,17 @@ public class InstallPackagesActivity extends AppCompatActivity {
     mSimpleManager = null;
     unbindService(mServiceConnection);
     updateVisibility();
+  }
+
+  public void deadlock() {
+    try {
+      String inst = getApplicationContext().getCacheDir() + "/lock.inst";
+      nativeThread.lockLocal(inst);
+      String remote = mSimpleManager.deadlock(inst);
+      nativeThread.lockRemote(remote);
+    } catch (RemoteException e) {
+      e.printStackTrace();
+    }
   }
 
   public void share() {

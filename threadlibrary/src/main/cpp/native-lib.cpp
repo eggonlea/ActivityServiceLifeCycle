@@ -1,10 +1,12 @@
 #include <fcntl.h>
 #include <fstream>
 #include <jni.h>
+#include <pthread.h>
 #include <string>
 #include <thread>
 #include <unistd.h>
 #include <android/log.h>
+#include <sys/file.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -289,4 +291,45 @@ Java_com_lilioss_lifecycle_library_NativeThread_nativeFinish(
     jobject /* this */) {
   __android_log_print(ANDROID_LOG_INFO, tag, "finish");
   finished = true;
+}
+
+static void lockLocal(const char *path) {
+  __android_log_print(ANDROID_LOG_INFO, tag, "Create %s", path);
+  int fd = open(path, O_CREAT | O_WRONLY, S_IRWXU | S_IRWXG | S_IRWXO);
+  if (fd < 0) {
+    __android_log_print(ANDROID_LOG_INFO, tag, "Failed to open file");
+    return;
+  }
+  __android_log_print(ANDROID_LOG_INFO, tag, "Locking %d %s", fd, path);
+  flock(fd, LOCK_EX);
+  __android_log_print(ANDROID_LOG_INFO, tag, "Locked %s", path);
+}
+
+static void *lockRemote(void *path) {
+  __android_log_print(ANDROID_LOG_INFO, tag, "Sleep 1s");
+  sleep(1);
+  lockLocal((const char *)path);
+  return NULL;
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_com_lilioss_lifecycle_library_NativeThread_nativeLockLocal(
+    JNIEnv* env,
+    jobject /* this */,
+    jstring path) {
+  lockLocal(env->GetStringUTFChars(path, 0));
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_com_lilioss_lifecycle_library_NativeThread_nativeLockRemote(
+    JNIEnv* env,
+    jobject /* this */,
+    jstring path) {
+  const char* str = env->GetStringUTFChars(path, 0);
+
+  pthread_t thread;
+  __android_log_print(ANDROID_LOG_INFO, tag, "Create new thread");
+  pthread_create(&thread, NULL, lockRemote, (void *)str);
+  __android_log_print(ANDROID_LOG_INFO, tag, "Detach new thread");
+  pthread_detach(thread);
 }

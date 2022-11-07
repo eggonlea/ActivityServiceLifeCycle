@@ -9,4 +9,5 @@
   <string name="cleanremote">Clean Remote</string>
   <string name="cleanlocal">Clean Local</string>
   <string name="ofdlock">OFD Lock</string>
+  <string name="deadlock">Deadlock</string>
 </resources>

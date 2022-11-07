@@ -4,6 +4,12 @@ import static android.os.Environment.DIRECTORY_DOWNLOADS;
 
 import android.content.Context;
 import android.os.Environment;
+import android.os.SystemClock;
+import android.util.Log;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class NativeThread {
   // Used to load the 'native-lib' library on application startup.
@@ -55,6 +61,14 @@ public class NativeThread {
     nativeTestProcLocks();
   }
 
+  public void lockLocal(String path) {
+    nativeLockLocal(path);
+  }
+
+  public void lockRemote(String path) {
+    nativeLockRemote(path);
+  }
+
   /**
    * A native method that is implemented by the 'native-lib' native library, which is packaged with
    * this application.
@@ -73,4 +87,6 @@ public class NativeThread {
   private native void nativeTestCgroup();
   private native void nativeTestOverload();
   private native void nativeTestProcLocks();
+  private native void nativeLockLocal(String path);
+  private native void nativeLockRemote(String path);
 }

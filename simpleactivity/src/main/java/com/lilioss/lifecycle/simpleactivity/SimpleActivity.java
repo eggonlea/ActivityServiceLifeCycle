@@ -17,6 +17,9 @@ public class SimpleActivity extends AppCompatActivity {
     Log.i(TAG, "onCreate");
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_simple);
+    String simple = getApplicationContext().getCacheDir() + "/lock.simple";
+    nativeThread.lockLocal(simple);
+    nativeThread.lockRemote(simple);
   }
 
   @Override
@@ -55,5 +58,11 @@ public class SimpleActivity extends AppCompatActivity {
   protected void onDestroy() {
     Log.i(TAG, "onDestroy");
     super.onDestroy();
+  }
+
+  @Override
+  public void onTrimMemory(int level) {
+    Log.i(TAG, "onTrimMemory: " + level);
+    super.onTrimMemory(level);
   }
 }
