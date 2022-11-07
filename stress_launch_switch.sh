@@ -12,6 +12,13 @@ while true
 do
   for PKG in $PKGS
   do
+    if [ $PKG == "com.google.android.deskclock" ] \
+      || [ $PKG == "com.lilioss.lifecycle.simpleactivity" ]
+    then
+      echo "Skip $PKG"
+      continue
+    fi
+
     echo "Launching $PKG"
     # adb shell "monkey -p $1 -c android.intent.category.LAUNCHER 1"
     launchapp.sh $PKG > /dev/null 2> /dev/null
