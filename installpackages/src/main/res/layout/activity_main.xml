@@ -15,12 +15,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/connect" />
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/switchCount"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:gravity="center_horizontal">
+      <EditText
+          android:id="@+id/editInterval"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:ems="4"
+          android:inputType="number"
+          android:minHeight="48dp"
+          android:text="10" />
+      <androidx.appcompat.widget.SwitchCompat
+          android:id="@+id/switchCount"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:minHeight="48dp"
+          android:text="@string/count" />
+    </LinearLayout>
+    <Button
+        android:id="@+id/buttonBroadcast"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minHeight="48dp"
-        android:text="@string/count" />
+        android:text="@string/broadcast" />
+    <Button
+        android:id="@+id/buttonOrderedBroadcast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/orderedbroadcast" />
     <Button
         android:id="@+id/buttonDeadlock"
         android:layout_width="wrap_content"
@@ -68,6 +92,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/disconnect" />
+    <Button
+        android:id="@+id/buttonReset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/reset" />
   </LinearLayout>
 
 

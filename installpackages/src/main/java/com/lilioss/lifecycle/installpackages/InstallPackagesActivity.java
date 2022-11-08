@@ -6,18 +6,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.IBinder;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.appcompat.widget.SwitchCompat;
 import com.lilioss.lifecycle.library.ISimpleAidlInterface;
 import com.lilioss.lifecycle.library.JavaThread;
 import com.lilioss.lifecycle.library.NativeThread;
+import java.util.List;
 
 public class InstallPackagesActivity extends AppCompatActivity {
 
@@ -29,18 +32,23 @@ public class InstallPackagesActivity extends AppCompatActivity {
   private static final String ACTION_AIDL = "com.lilioss.lifecycle.simpleactivity.action.AIDL";
   private static final String EXTRA_PARAM1 = "com.lilioss.lifecycle.simpleactivity.extra.PARAM1";
   private static final String EXTRA_PARAM2 = "com.lilioss.lifecycle.simpleactivity.extra.PARAM2";
+  private static final String MANIFEST_BROADCAST = "com.lilioss.lifecycle.ManifestBroadcast";
+  private static final String REGISTER_BROADCAST = "com.lilioss.lifecycle.RegisterBroadcast";
 
   private final JavaThread javaThread = new JavaThread(TAG);
   private final NativeThread nativeThread = new NativeThread(TAG);
 
   private Button buttonConnect;
   private Button buttonShare;
+  private Button buttonBroadcast;
+  private Button buttonOrderedBroadcast;
   private Button buttonDeadlock;
   private Button buttonForkRemote;
   private Button buttonForkLocal;
   private Button buttonCleanRemote;
   private Button buttonCleanLocal;
   private Button buttonDisconnect;
+  private Button buttonReset;
   private SwitchCompat switchCount;
 
   private ISimpleAidlInterface mSimpleManager = null;
@@ -92,12 +100,22 @@ public class InstallPackagesActivity extends AppCompatActivity {
       }
     });
 
+    buttonReset = findViewById(R.id.buttonReset);
+    buttonReset.setOnClickListener(new View.OnClickListener() {
+      public void onClick(View v) {
+        // Code here executes on main thread after user presses button
+        Log.i(TAG, "onClick(reset)");
+        reset();
+      }
+    });
+
     switchCount = findViewById(R.id.switchCount);
     switchCount.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
         // Code here executes on main thread after user presses button
         Log.i(TAG, "onClick(count)");
         if (switchCount.isChecked()) {
+          int interval = Integer.parseInt(((EditText)findViewById(R.id.editInterval)).getText().toString());
           mCounting = true;
           mCountThread = new Thread() {
             /**
@@ -121,7 +139,7 @@ public class InstallPackagesActivity extends AppCompatActivity {
                   mSimpleManager.count(i);
                   Log.i(TAG, "Send counting " + i);
                   i++;
-                  Thread.sleep(1000);
+                  Thread.sleep(interval);
                 } catch (InterruptedException | RemoteException e) {
                   e.printStackTrace();
                 }
@@ -134,6 +152,24 @@ public class InstallPackagesActivity extends AppCompatActivity {
         } else {
           mCounting = false;
         }
+      }
+    });
+
+    buttonBroadcast = findViewById(R.id.buttonBroadcast);
+    buttonBroadcast.findViewById(R.id.buttonBroadcast).setOnClickListener(new View.OnClickListener() {
+      public void onClick(View v) {
+        // Code here executes on main thread after user presses button
+        Log.i(TAG, "onClick(broadcast)");
+        broadcast(false);
+      }
+    });
+
+    buttonOrderedBroadcast = findViewById(R.id.buttonOrderedBroadcast);
+    buttonOrderedBroadcast.findViewById(R.id.buttonOrderedBroadcast).setOnClickListener(new View.OnClickListener() {
+      public void onClick(View v) {
+        // Code here executes on main thread after user presses button
+        Log.i(TAG, "onClick(orderedbroadcast)");
+        broadcast(true);
       }
     });
 
@@ -265,9 +301,32 @@ public class InstallPackagesActivity extends AppCompatActivity {
   }
 
   public void disconnect() {
-    mSimpleManager = null;
     unbindService(mServiceConnection);
     updateVisibility();
+  }
+
+  public void reset() {
+    mSimpleManager = null;
+    updateVisibility();
+  }
+
+  public void broadcast(boolean ordered) {
+    if (ordered) {
+      Intent intent = new Intent(MANIFEST_BROADCAST);
+      PackageManager pm = getPackageManager();
+      List<ResolveInfo> infos = pm.queryBroadcastReceivers(intent,
+          PackageManager.ResolveInfoFlags.of(0));
+      for (ResolveInfo info : infos) {
+        ComponentName cn = new ComponentName(info.activityInfo.packageName, info.activityInfo.name);
+        Log.i(TAG, "Found component: " + cn);
+        intent.setComponent(cn);
+        sendOrderedBroadcast(intent, null);
+      }
+    } else {
+      Intent intent = new Intent(REGISTER_BROADCAST);
+      intent.setAction(REGISTER_BROADCAST);
+      sendBroadcast(intent);
+    }
   }
 
   public void deadlock() {
@@ -365,7 +424,7 @@ public class InstallPackagesActivity extends AppCompatActivity {
     @Override
     public void onServiceDisconnected(ComponentName name) {
       Log.i(TAG, "onServiceDisconnected");
-      mSimpleManager = null;
+      mSimpleManager = null;  // never executed!!!
       updateVisibility();
     }
   };

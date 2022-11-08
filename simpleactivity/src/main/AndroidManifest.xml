@@ -18,7 +18,7 @@
       android:supportsRtl="true"
       android:theme="@style/Theme.ActivityServiceLifeCycle">
 
-    <activity android:name=".SimpleActivity">
+    <activity android:name=".SimpleActivity" android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.DEFAULT" />
@@ -28,7 +28,8 @@
 
     <activity
         android:name=".CgroupFlockActivity"
-        android:label="CgroupFlockActivity">
+        android:label="CgroupFlockActivity"
+        android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
@@ -37,7 +38,8 @@
 
     <activity
         android:name=".BackgroundActivity"
-        android:label="BackgroundActivity">
+        android:label="BackgroundActivity"
+        android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
@@ -46,7 +48,8 @@
 
     <activity
         android:name=".BatteryActivity"
-        android:label="BatteryActivity">
+        android:label="BatteryActivity"
+        android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
@@ -62,7 +65,8 @@
 
     <activity
         android:name=".AlarmActivity"
-        android:label="AlarmActivity">
+        android:label="AlarmActivity"
+        android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
@@ -92,9 +96,15 @@
         android:enabled="true"
         android:exported="true">
       <intent-filter>
-        <action android:name="com.lilioss.lifecycle.simpleactivity.action.aidl" />
+        <action android:name="com.lilioss.lifecycle.simpleactivity.action.AIDL" />
       </intent-filter>
     </service>
+
+    <receiver android:name=".SimpleBroadcastReceiver" android:exported="true">
+      <intent-filter>
+        <action android:name="com.lilioss.lifecycle.ManifestBroadcast" />
+      </intent-filter>
+    </receiver>
 
   </application>
 

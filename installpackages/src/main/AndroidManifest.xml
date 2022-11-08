@@ -18,7 +18,7 @@
       android:supportsRtl="true"
       android:requestLegacyExternalStorage="true"
       android:theme="@style/Theme.ActivityServiceLifeCycle">
-    <activity android:name=".InstallPackagesActivity">
+    <activity android:name=".InstallPackagesActivity" android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
@@ -27,7 +27,8 @@
 
     <activity
         android:name=".ResolverActivity"
-        android:label="ResolverActivity">>
+        android:label="ResolverActivity"
+        android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />

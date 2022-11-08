@@ -1,16 +1,24 @@
 package com.lilioss.lifecycle.simpleactivity;
 
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
 import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.core.content.ContextCompat;
 import com.lilioss.lifecycle.library.JavaThread;
 import com.lilioss.lifecycle.library.NativeThread;
 
 public class SimpleActivity extends AppCompatActivity {
 
   private final static String TAG = "LifeCycle: SimpleActivity";
+
+  private static final String REGISTER_BROADCAST = "com.lilioss.lifecycle.RegisterBroadcast";
+
   private JavaThread javaThread = null;
   private final NativeThread nativeThread = new NativeThread(TAG);
+
+  BroadcastReceiver mReceiver = new SimpleBroadcastReceiver();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +28,10 @@ public class SimpleActivity extends AppCompatActivity {
     String simple = getApplicationContext().getCacheDir() + "/lock.simple";
     nativeThread.lockLocal(simple);
     nativeThread.lockRemote(simple);
+
+    IntentFilter filter = new IntentFilter(REGISTER_BROADCAST);
+    ContextCompat.registerReceiver(getApplicationContext(), mReceiver, filter,
+        ContextCompat.RECEIVER_EXPORTED | ContextCompat.RECEIVER_VISIBLE_TO_INSTANT_APPS);
   }
 
   @Override
@@ -58,6 +70,7 @@ public class SimpleActivity extends AppCompatActivity {
   protected void onDestroy() {
     Log.i(TAG, "onDestroy");
     super.onDestroy();
+    unregisterReceiver(mReceiver);
   }
 
   @Override
