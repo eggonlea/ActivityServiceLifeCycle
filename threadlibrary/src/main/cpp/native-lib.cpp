@@ -293,21 +293,23 @@ Java_com_lilioss_lifecycle_library_NativeThread_nativeFinish(
   finished = true;
 }
 
-static void lockLocal(const char *path) {
+static int lockLocal(const char *path) {
   __android_log_print(ANDROID_LOG_INFO, tag, "Create %s", path);
   int fd = open(path, O_CREAT | O_WRONLY, S_IRWXU | S_IRWXG | S_IRWXO);
   if (fd < 0) {
     __android_log_print(ANDROID_LOG_INFO, tag, "Failed to open file");
-    return;
+    return fd;
   }
   __android_log_print(ANDROID_LOG_INFO, tag, "Locking %d %s", fd, path);
   flock(fd, LOCK_EX);
-  __android_log_print(ANDROID_LOG_INFO, tag, "Locked %s", path);
+  __android_log_print(ANDROID_LOG_INFO, tag, "Locked %d %s", fd, path);
+  return fd;
 }
 
 static void *lockRemote(void *path) {
-  __android_log_print(ANDROID_LOG_INFO, tag, "Sleep 1s");
+  __android_log_print(ANDROID_LOG_INFO, tag, "Sleep 1s for remote lock");
   sleep(1);
+  // discard remote fd
   lockLocal((const char *)path);
   return NULL;
 }
@@ -317,7 +319,7 @@ Java_com_lilioss_lifecycle_library_NativeThread_nativeLockLocal(
     JNIEnv* env,
     jobject /* this */,
     jstring path) {
-  lockLocal(env->GetStringUTFChars(path, 0));
+  fd = lockLocal(env->GetStringUTFChars(path, 0));
 }
 
 extern "C" JNIEXPORT void JNICALL
@@ -328,8 +330,8 @@ Java_com_lilioss_lifecycle_library_NativeThread_nativeLockRemote(
   const char* str = env->GetStringUTFChars(path, 0);
 
   pthread_t thread;
-  __android_log_print(ANDROID_LOG_INFO, tag, "Create new thread");
+  __android_log_print(ANDROID_LOG_INFO, tag, "Create new thread for remote lock");
   pthread_create(&thread, NULL, lockRemote, (void *)str);
-  __android_log_print(ANDROID_LOG_INFO, tag, "Detach new thread");
+  __android_log_print(ANDROID_LOG_INFO, tag, "Detach new thread for remote lock");
   pthread_detach(thread);
 }

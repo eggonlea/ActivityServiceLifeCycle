@@ -27,7 +27,7 @@ public class SimpleActivity extends AppCompatActivity {
     setContentView(R.layout.activity_simple);
     String simple = getApplicationContext().getCacheDir() + "/lock.simple";
     nativeThread.lockLocal(simple);
-    nativeThread.lockRemote(simple);
+    //nativeThread.lockRemote(simple);
 
     IntentFilter filter = new IntentFilter(REGISTER_BROADCAST);
     ContextCompat.registerReceiver(getApplicationContext(), mReceiver, filter,
@@ -70,7 +70,7 @@ public class SimpleActivity extends AppCompatActivity {
   protected void onDestroy() {
     Log.i(TAG, "onDestroy");
     super.onDestroy();
-    unregisterReceiver(mReceiver);
+    getApplicationContext().unregisterReceiver(mReceiver);
   }
 
   @Override
