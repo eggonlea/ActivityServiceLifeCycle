@@ -1,0 +1,122 @@
+ACTIVITY MANAGER PROCESS EXIT INFO (dumpsys activity exit-info)
+Last Timestamp of Persistence Into Persistent Storage: 2023-05-12 11:42:36.122
+  package: com.google.android.apps.magazines
+    Historical Process Exit for uid=10291
+        ApplicationExitInfo #0:
+          timestamp=2023-05-12 11:43:07.022 pid=15089 realUid=10291 packageUid=10291 definingUid=10291 user=0
+          process=com.google.android.apps.magazines reason=16 (PACKAGE UPDATED) subreason=0 (UNKNOWN) status=0
+          importance=400 pss=36MB rss=118MB description=stop com.google.android.apps.magazines due to installPackageLI state=empty trace=null
+  package: com.google.mds
+    Historical Process Exit for uid=10206
+        ApplicationExitInfo #0:
+          timestamp=2023-05-12 11:43:25.826 pid=8272 realUid=10206 packageUid=10206 definingUid=10206 user=0
+          process=com.google.mds reason=3 (LOW_MEMORY) subreason=0 (UNKNOWN) status=0
+          importance=400 pss=7.0MB rss=81MB description=null state=empty trace=null
+  package: com.tmobile.planprovider
+    Historical Process Exit for uid=10239
+        ApplicationExitInfo #0:
+          timestamp=2023-05-12 11:43:25.757 pid=8146 realUid=10239 packageUid=10239 definingUid=10239 user=0
+          process=com.tmobile.planprovider reason=3 (LOW_MEMORY) subreason=0 (UNKNOWN) status=0
+          importance=400 pss=3.4MB rss=75MB description=null state=empty trace=null
+  package: com.google.android.hardwareinfo
+    Historical Process Exit for uid=10163
+        ApplicationExitInfo #0:
+          timestamp=2023-05-12 11:43:25.988 pid=9350 realUid=10163 packageUid=10163 definingUid=10163 user=0
+          process=com.google.android.hardwareinfo reason=3 (LOW_MEMORY) subreason=0 (UNKNOWN) status=0
+          importance=400 pss=5.7MB rss=80MB description=null state=empty trace=null
+  package: com.google.googlecbrs
+    Historical Process Exit for uid=10210
+        ApplicationExitInfo #0:
+          timestamp=2023-05-12 11:43:25.857 pid=8337 realUid=10210 packageUid=10210 definingUid=10210 user=0
+          process=com.google.googlecbrs reason=3 (LOW_MEMORY) subreason=0 (UNKNOWN) status=0
+          importance=400 pss=4.1MB rss=78MB description=null state=empty trace=null
+  package: com.shannon.imsservice
+    Historical Process Exit for uid=10208
+        ApplicationExitInfo #0:
+          timestamp=2023-05-12 11:43:25.741 pid=3249 realUid=10208 packageUid=10208 definingUid=10208 user=0
+          process=.ShannonImsService reason=3 (LOW_MEMORY) subreason=0 (UNKNOWN) status=0
+          importance=400 pss=4.8MB rss=79MB description=null state=empty trace=null
+  package: com.samsung.slsi.telephony.autoanswer
+    Historical Process Exit for uid=1001
+        ApplicationExitInfo #0:
+          timestamp=2023-05-12 11:43:25.870 pid=8201 realUid=1001 packageUid=1001 definingUid=1001 user=0
+          process=com.samsung.slsi.telephony.autoanswer reason=3 (LOW_MEMORY) subreason=0 (UNKNOWN) status=0
+          importance=400 pss=3.5MB rss=69MB description=null state=empty trace=null
+  package: com.google.android.documentsui
+    Historical Process Exit for uid=10087
+        ApplicationExitInfo #0:
+          timestamp=2023-05-12 11:42:45.870 pid=5440 realUid=10087 packageUid=10087 definingUid=10087 user=0
+          process=com.google.android.documentsui reason=3 (LOW_MEMORY) subreason=0 (UNKNOWN) status=0
+          importance=400 pss=9.6MB rss=91MB description=null state=empty trace=null
+  package: com.android.localtransport
+    Historical Process Exit for uid=1000
+        ApplicationExitInfo #0:
+          timestamp=2023-05-12 11:43:04.172 pid=4759 realUid=1000 packageUid=1000 definingUid=1000 user=0
+          process=com.android.localtransport reason=3 (LOW_MEMORY) subreason=0 (UNKNOWN) status=0
+          importance=400 pss=3.6MB rss=71MB description=null state=empty trace=null
+  package: com.google.android.apps.walletnfcrel
+    Historical Process Exit for uid=10294
+        ApplicationExitInfo #0:
+          timestamp=2023-05-12 11:43:17.775 pid=6827 realUid=10294 packageUid=10294 definingUid=10294 user=0
+          process=com.google.android.apps.walletnfcrel reason=16 (PACKAGE UPDATED) subreason=0 (UNKNOWN) status=0
+          importance=400 pss=30MB rss=107MB description=stop com.google.android.apps.walletnfcrel due to installPackageLI state=empty trace=null
+  package: com.google.android.ims
+    Historical Process Exit for uid=10304
+        ApplicationExitInfo #0:
+          timestamp=2023-05-12 11:42:44.818 pid=3224 realUid=10304 packageUid=10304 definingUid=10304 user=0
+          process=com.google.android.ims reason=16 (PACKAGE UPDATED) subreason=0 (UNKNOWN) status=0
+          importance=400 pss=11MB rss=83MB description=stop com.google.android.ims due to installPackageLI state=empty trace=null
+  package: com.google.android.apps.maps
+    Historical Process Exit for uid=10199
+        ApplicationExitInfo #0:
+          timestamp=2023-05-12 11:42:52.230 pid=18947 realUid=10199 packageUid=10199 definingUid=10199 user=0
+          process=com.google.android.apps.maps:server_recovery_process_scheduled reason=1 (EXIT_SELF) subreason=0 (UNKNOWN) status=0
+          importance=400 pss=0.00 rss=0.00 description=null state=empty trace=null
+  package: com.google.android.ext.adservices.api
+    Historical Process Exit for uid=10258
+        ApplicationExitInfo #0:
+          timestamp=2023-05-12 11:43:25.783 pid=9474 realUid=10258 packageUid=10258 definingUid=10258 user=0
+          process=com.google.android.ext.adservices.api reason=3 (LOW_MEMORY) subreason=0 (UNKNOWN) status=0
+          importance=400 pss=5.8MB rss=79MB description=null state=empty trace=null
+  package: com.shannon.rcsservice
+    Historical Process Exit for uid=10236
+        ApplicationExitInfo #0:
+          timestamp=2023-05-12 11:43:25.714 pid=3269 realUid=10236 packageUid=10236 definingUid=10236 user=0
+          process=com.shannon.rcsservice:shannonrcsservice reason=3 (LOW_MEMORY) subreason=0 (UNKNOWN) status=0
+          importance=400 pss=5.8MB rss=80MB description=null state=empty trace=null
+  package: com.android.printspooler
+    Historical Process Exit for uid=10107
+        ApplicationExitInfo #0:
+          timestamp=2023-05-12 11:42:45.852 pid=4217 realUid=10107 packageUid=10107 definingUid=10107 user=0
+          process=com.android.printspooler reason=3 (LOW_MEMORY) subreason=0 (UNKNOWN) status=0
+          importance=400 pss=3.6MB rss=78MB description=null state=empty trace=null
+  package: com.samsung.slsi.telephony.silentlogging
+    Historical Process Exit for uid=1000
+        ApplicationExitInfo #0:
+          timestamp=2023-05-12 11:43:25.913 pid=8171 realUid=1000 packageUid=1000 definingUid=1000 user=0
+          process=com.samsung.slsi.telephony.silentlogging reason=3 (LOW_MEMORY) subreason=0 (UNKNOWN) status=0
+          importance=400 pss=3.5MB rss=69MB description=null state=empty trace=null
+  package: com.google.android.apps.paidtasks
+    Historical Process Exit for uid=10279
+        ApplicationExitInfo #0:
+          timestamp=2023-05-12 11:42:59.537 pid=7309 realUid=10279 packageUid=10279 definingUid=10279 user=0
+          process=com.google.android.apps.paidtasks reason=16 (PACKAGE UPDATED) subreason=0 (UNKNOWN) status=0
+          importance=400 pss=26MB rss=108MB description=stop com.google.android.apps.paidtasks due to installPackageLI state=empty trace=null
+  package: com.google.android.flipendo
+    Historical Process Exit for uid=10246
+        ApplicationExitInfo #0:
+          timestamp=2023-05-12 11:43:25.959 pid=2447 realUid=10246 packageUid=10246 definingUid=10246 user=0
+          process=com.google.android.flipendo reason=3 (LOW_MEMORY) subreason=0 (UNKNOWN) status=0
+          importance=400 pss=6.7MB rss=86MB description=null state=empty trace=null
+  package: com.google.android.carriersetup
+    Historical Process Exit for uid=10234
+        ApplicationExitInfo #0:
+          timestamp=2023-05-12 11:43:04.195 pid=4305 realUid=10234 packageUid=10234 definingUid=10234 user=0
+          process=com.google.android.carriersetup reason=3 (LOW_MEMORY) subreason=0 (UNKNOWN) status=0
+          importance=400 pss=7.0MB rss=89MB description=null state=empty trace=null
+  package: com.google.omadm.trigger
+    Historical Process Exit for uid=10162
+        ApplicationExitInfo #0:
+          timestamp=2023-05-12 11:43:25.932 pid=4219 realUid=10162 packageUid=10162 definingUid=10162 user=0
+          process=com.google.omadm.trigger reason=3 (LOW_MEMORY) subreason=0 (UNKNOWN) status=0
+          importance=400 pss=3.7MB rss=70MB description=null state=empty trace=null
