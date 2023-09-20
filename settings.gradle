@@ -2,3 +2,4 @@ rootProject.name = "ActivityServiceLifeCycle"
 include ':simpleactivity'
 include ':installpackages'
 include ':threadlibrary'
+include ':persistent'

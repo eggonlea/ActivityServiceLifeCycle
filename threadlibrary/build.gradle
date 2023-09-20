@@ -35,6 +35,9 @@ android {
         }
     }
     namespace 'com.lilioss.lifecycle.library'
+    buildFeatures {
+        aidl true
+    }
 }
 
 dependencies {
