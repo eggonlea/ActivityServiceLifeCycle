@@ -142,6 +142,7 @@ public class InstallPackagesActivity extends AppCompatActivity {
                   Thread.sleep(interval);
                 } catch (InterruptedException | RemoteException e) {
                   e.printStackTrace();
+                  break;
                 }
               }
               Log.i(TAG, "Stop counting");
