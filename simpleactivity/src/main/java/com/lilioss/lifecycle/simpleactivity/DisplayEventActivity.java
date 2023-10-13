@@ -19,20 +19,6 @@ import androidx.annotation.Nullable;
  */
 public class DisplayEventActivity extends Activity {
   private static final String TAG = DisplayEventActivity.class.getSimpleName();
-
-  private static final String TEST_DISPLAYS = "DISPLAYS";
-  private static final String TEST_MESSENGER = "MESSENGER";
-
-  private static final int MESSAGE_LAUNCHED = 1;
-  private static final int MESSAGE_CALLBACK = 2;
-
-  private static final int DISPLAY_ADDED = 1;
-  private static final int DISPLAY_CHANGED = 2;
-  private static final int DISPLAY_REMOVED = 3;
-
-  private int mExpectedDisplayCount;
-  private int mSeenDisplayCount;
-  private Messenger mMessenger;
   private DisplayManager mDisplayManager;
   private DisplayManager.DisplayListener mDisplayListener;
 
