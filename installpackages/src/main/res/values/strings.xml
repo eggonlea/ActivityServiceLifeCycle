@@ -13,4 +13,6 @@
   <string name="deadlock">Deadlock</string>
   <string name="broadcast">Broadcast</string>
   <string name="orderedbroadcast">OrderedBroadcast</string>
+  <string name="providerresolver">ProviderResolver</string>
+  <string name="providerclient">Client</string>
 </resources>

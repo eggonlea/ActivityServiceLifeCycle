@@ -2,16 +2,20 @@ package com.lilioss.lifecycle.installpackages;
 
 import android.app.IntentService;
 import android.content.ComponentName;
+import android.content.ContentProviderClient;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.os.IBinder;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,6 +38,8 @@ public class InstallPackagesActivity extends AppCompatActivity {
   private static final String EXTRA_PARAM2 = "com.lilioss.lifecycle.simpleactivity.extra.PARAM2";
   private static final String MANIFEST_BROADCAST = "com.lilioss.lifecycle.ManifestBroadcast";
   private static final String REGISTER_BROADCAST = "com.lilioss.lifecycle.RegisterBroadcast";
+  private static final String AUTHORITY = "com.lilioss.simpleactivity.provider";
+  private static final String METHOD_NAME = "get_simple_info";
 
   private final JavaThread javaThread = new JavaThread(TAG);
   private final NativeThread nativeThread = new NativeThread(TAG);
@@ -50,11 +56,15 @@ public class InstallPackagesActivity extends AppCompatActivity {
   private Button buttonDisconnect;
   private Button buttonReset;
   private SwitchCompat switchCount;
+  private Button buttonProviderResolver;
+  private SwitchCompat switchClient;
 
   private ISimpleAidlInterface mSimpleManager = null;
   private int mFd = -1;
   private boolean mCounting = false;
   private Thread mCountThread = null;
+  private ContentResolver resolver = null;
+  private ContentProviderClient client = null;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -157,7 +167,7 @@ public class InstallPackagesActivity extends AppCompatActivity {
     });
 
     buttonBroadcast = findViewById(R.id.buttonBroadcast);
-    buttonBroadcast.findViewById(R.id.buttonBroadcast).setOnClickListener(new View.OnClickListener() {
+    buttonBroadcast.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
         // Code here executes on main thread after user presses button
         Log.i(TAG, "onClick(broadcast)");
@@ -166,7 +176,7 @@ public class InstallPackagesActivity extends AppCompatActivity {
     });
 
     buttonOrderedBroadcast = findViewById(R.id.buttonOrderedBroadcast);
-    buttonOrderedBroadcast.findViewById(R.id.buttonOrderedBroadcast).setOnClickListener(new View.OnClickListener() {
+    buttonOrderedBroadcast.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
         // Code here executes on main thread after user presses button
         Log.i(TAG, "onClick(orderedbroadcast)");
@@ -174,8 +184,18 @@ public class InstallPackagesActivity extends AppCompatActivity {
       }
     });
 
+    buttonProviderResolver = findViewById(R.id.buttonProviderResolver);
+    buttonProviderResolver.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Log.i(TAG, "onClick(providerresolver)");
+        providerResolve(switchClient.isChecked());
+      }
+    });
+    switchClient = findViewById(R.id.switchClient);
+
     buttonDeadlock = findViewById(R.id.buttonDeadlock);
-    buttonDeadlock.findViewById(R.id.buttonDeadlock).setOnClickListener(new View.OnClickListener() {
+    buttonDeadlock.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
         // Code here executes on main thread after user presses button
         Log.i(TAG, "onClick(deadlock)");
@@ -184,7 +204,7 @@ public class InstallPackagesActivity extends AppCompatActivity {
     });
 
     buttonShare = findViewById(R.id.buttonShare);
-    buttonShare.findViewById(R.id.buttonShare).setOnClickListener(new View.OnClickListener() {
+    buttonShare.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
         // Code here executes on main thread after user presses button
         Log.i(TAG, "onClick(share)");
@@ -327,6 +347,36 @@ public class InstallPackagesActivity extends AppCompatActivity {
       Intent intent = new Intent(REGISTER_BROADCAST);
       intent.setAction(REGISTER_BROADCAST);
       sendBroadcast(intent);
+    }
+  }
+
+  public void providerResolve(boolean useClient) {
+    Uri uri = Uri.parse("content://" + AUTHORITY);
+    if (resolver == null) {
+      Log.i(TAG, "getContentResolver()");
+      resolver = getContentResolver();
+    }
+    Log.i(TAG, "providerResolve useClient " + useClient);
+    Bundle bundle = null;
+    if (useClient) {
+      try (ContentProviderClient client = resolver.acquireContentProviderClient(uri)) {
+        try {
+          bundle = client.call(METHOD_NAME, null, null);
+        } catch (RemoteException e) {
+          Log.i(TAG, "Failed to call " + AUTHORITY + "/" + METHOD_NAME);
+          e.printStackTrace();
+        }
+      }
+    } else {
+      bundle = resolver.call(uri, METHOD_NAME, null, null);
+    }
+
+    if (bundle == null) {
+      Log.i(TAG, "null bundle");
+    } else {
+      Log.i(TAG, "simple_int " + bundle.getInt("simple_int"));
+      Log.i(TAG, "simple_long " + bundle.getLong("simple_long"));
+      Log.i(TAG, "calling_package " + bundle.getString("calling_package"));
     }
   }
 
